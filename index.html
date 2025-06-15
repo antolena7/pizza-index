@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Pizza Index – Pentagon Activity Tracker</title>
+  <meta name="google-site-verification" content="UGYZ7IQOeo1HPOEsYdf4gJbW9D-NpOL2fvuzO7pj13c" />
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Leaflet for interactive map (placeholder) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      background-color: #fff9f0;
+      color: #333;
+      border-left: 15px solid #d8411f;
+      border-right: 15px solid #d8411f;
+    }
+
+    header {
+      background: #d8411f;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-family: 'Amatic SC', cursive;
+      font-size: 3rem;
+      letter-spacing: 1px;
+    }
+
+    main {
+      padding: 1rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h2 {
+      font-family: 'Amatic SC', cursive;
+      font-size: 2rem;
+      margin-top: 2rem;
+      color: #d8411f;
+    }
+
+    section {
+      margin-bottom: 2rem;
+    }
+
+    .alert-box {
+      background: #ffe0cc;
+      padding: 1rem;
+      border-left: 6px solid #d8411f;
+      font-weight: bold;
+      margin: 1rem 0;
+    }
+
+    #map {
+      height: 400px;
+      width: 100%;
+      border-radius: 8px;
+      border: 2px dashed #d8411f;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 12px;
+      padding: 1.5rem;
+      color: #777;
+    }
+
+    a {
+      color: #d8411f;
+      text-decoration: none;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Pizza Index</h1>
+    <p>Tracking Pentagon Activity One Slice at a Time 🍕🔍</p>
+  </header>
+
+  <main>
+
+    <!-- 🍕 Sezione 1: Correlazioni Storiche -->
+    <section>
+      <h2>🧠 Historical Correlations</h2>
+      <p>From 9/11 to modern international escalations, we log and analyze coinciding spikes in pizza activity near the Pentagon. Pattern recognition, served hot.</p>
+      <ul>
+        <li><strong>Sept 11, 2001:</strong> Delivery records confirm surge in late-night orders.</li>
+        <li><strong>June 12, 2025:</strong> Escalation involving Israel/Iran mirrored by a +42% spike.</li>
+      </ul>
+    </section>
+
+    <!-- 🍕 Sezione 2: Mappa Interattiva -->
+    <section>
+      <h2>📍 Pizza Surveillance Map</h2>
+      <p>Click on any outlet to see delivery spikes, historical data, and proximity to the Pentagon.</p>
+      <div id="map"></div>
+    </section>
+
+    <!-- 🍕 Sezione 3: Pizza Watch – Alert Live -->
+    <section>
+      <h2>🚨 Pizza Watch</h2>
+      <div class="alert-box">
+        🍕 Unusual spike at 9:30 PM today at Flippin’ Pizza (+55% above average).
+      </div>
+      <p>Updated manually (for now). Stay tuned for pizza patterns that may preempt policy pivots.</p>
+    </section>
+
+    <!-- 🍕 Sezione 4: Latest Geo Events -->
+    <section>
+      <h2>📰 Latest Geo Events</h2>
+      <ul>
+        <li><strong>June 10, 2025:</strong> Pentagon briefing on maritime strategy (source: <a href="https://www.defense.gov" target="_blank">DoD</a>)</li>
+        <li><strong>June 12, 2025:</strong> Anonymous source reports increased black SUV traffic at entrance A5.</li>
+      </ul>
+    </section>
+
+    <!-- 🍕 Sezione 5: Global Index Chart (placeholder) -->
+    <section>
+      <h2>📈 Global Pizza Index</h2>
+      <p>[Chart Placeholder] Daily average pizza traffic summed across surveillance zone. Big jumps often mean big decisions ahead.</p>
+    </section>
+
+    <!-- 🍕 Sezione 6: About & Disclaimer -->
+    <section>
+      <h2>👤 About This Project</h2>
+      <p><strong>What is the Pizza Index?</strong><br>
+      An independent OSINT (Open-Source Intelligence) initiative tracking behavioral patterns through local food delivery. No formal affiliation. All data sourced from public channels or estimated models. We do not track individuals — only slices.</p>
+      <p><em>“Correlation is not causation — but correlation with mozzarella is worth a second look.”</em></p>
+    </section>
+
+  </main>
+
+  <footer>
+    &copy; 2025 Classified Pizza Initiative. <br>
+    No anchovies were harmed during the making of this platform.
+  </footer>
+
+  <!-- Leaflet Map JS -->
+  <script>
+    const map = L.map('map').setView([38.8719, -77.0563], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    const pizzerias = [
+      {
+        coords: [38.8764, -77.0517],
+        name: "Pentagon Pizza Hub",
+        info: "🗓️ May 1, 2025<br>📊 +35% in pizza sales<br>🍕 Source: Delivery Logs"
+      },
+      {
+        coords: [38.8893, -77.0502],
+        name: "Pizza City Express",
+        info: "🗓️ June 10, 2025<br>📊 +40% sales<br>🧑‍✈️ Event: Military conference"
+      },
+      {
+        coords: [38.8529, -77.0570],
+        name: "Flippin’ Pizza",
+        info: "🗓️ June 12, 2025<br>📊 +55% orders<br>🌍 Context: Israel-Iran escalation"
+      }
+    ];
+
+    pizzerias.forEach(p => {
+      const marker = L.marker(p.coords).addTo(map)
+        .bindPopup(`<strong>${p.name}</strong><br>${p.info}`);
+      marker.on('click', () => {
+        console.log("🍕 You just clicked the spiciest slice 🔥");
+      });
+    });
+  </script>
+</body>
+</html>
