@@ -5,11 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The Pizza Index – Pentagon Activity Tracker</title>
   <meta name="google-site-verification" content="UGYZ7IQOeo1HPOEsYdf4gJbW9D-NpOL2fvuzO7pj13c" />
-  
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-35M1TNJ0Y4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-35M1TNJ0Y4');
+  </script>
+
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
 
-  <!-- Leaflet for interactive map (placeholder) -->
+  <!-- Leaflet Map CSS & JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -108,13 +117,13 @@
       <div id="map"></div>
     </section>
 
-    <!-- 🍕 Sezione 3: Pizza Watch – Alert Live -->
+    <!-- 🍕 Sezione 3: Pizza Watch – Dati Reali -->
     <section>
       <h2>🚨 Pizza Watch</h2>
       <div class="alert-box">
-        🍕 Unusual spike at 9:30 PM today at Flippin’ Pizza (+55% above average).
+        🍕 <strong>June 12, 2025 – 6:59 PM ET</strong> – Google Maps “Popular Times” segnala un aumento <em>estremo</em> in almeno 4 pizzerie (<strong>We, The Pizza</strong>, <strong>Domino’s</strong>, <strong>District Pizza Palace</strong>) intorno al Pentagono, un’ora prima dell’attacco israeliano all’Iran. Fonte: “Pentagon Pizza Report” su X.
       </div>
-      <p>Updated manually (for now). Stay tuned for pizza patterns that may preempt policy pivots.</p>
+      <p>Fonti: Fast Company, NDTV, Business Standard, The Donut</p>
     </section>
 
     <!-- 🍕 Sezione 4: Latest Geo Events -->
@@ -170,15 +179,17 @@
         coords: [38.8529, -77.0570],
         name: "Flippin’ Pizza",
         info: "🗓️ June 12, 2025<br>📊 +55% orders<br>🌍 Context: Israel-Iran escalation"
+      },
+      {
+        coords: [38.8764, -77.0517],
+        name: "District Pizza Palace",
+        info: "🗓️ June 12, 2025 – 6:59 PM ET<br>📊 Sudden huge spike noted on Google Maps<br>🍕 Reported by Pentagon Pizza Report on X"
       }
     ];
 
     pizzerias.forEach(p => {
       const marker = L.marker(p.coords).addTo(map)
         .bindPopup(`<strong>${p.name}</strong><br>${p.info}`);
-      marker.on('click', () => {
-        console.log("🍕 You just clicked the spiciest slice 🔥");
-      });
     });
   </script>
 </body>
