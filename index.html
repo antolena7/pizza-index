@@ -6,12 +6,6 @@
   <title>The Pizza Index – Pentagon Activity Tracker</title>
   <meta name="google-site-verification" content="UGYZ7IQOeo1HPOEsYdf4gJbW9D-NpOL2fvuzO7pj13c" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The Pizza Index – Pentagon Activity Tracker</title>
-  <meta name="google-site-verification" content="UGYZ7IQOeo1HPOEsYdf4gJbW9D-NpOL2fvuzO7pj13c" />
-
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-35M1TNJ0Y4"></script>
   <script>
@@ -22,11 +16,14 @@
   </script>
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet" />
 
   <!-- Leaflet Map CSS & JS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     body {
@@ -106,7 +103,7 @@
 
   <main>
 
-    <!-- 🍕 Sezione 1: Correlazioni Storiche -->
+    <!-- 🍕 Section 1: Historical Correlations -->
     <section>
       <h2>🧠 Historical Correlations</h2>
       <p>From 9/11 to modern international escalations, we log and analyze coinciding spikes in pizza activity near the Pentagon. Pattern recognition, served hot.</p>
@@ -116,23 +113,28 @@
       </ul>
     </section>
 
-    <!-- 🍕 Sezione 2: Mappa Interattiva -->
+    <!-- 🍕 Section 2: Interactive Map -->
     <section>
       <h2>📍 Pizza Surveillance Map</h2>
       <p>Click on any outlet to see delivery spikes, historical data, and proximity to the Pentagon.</p>
       <div id="map"></div>
     </section>
 
-    <!-- 🍕 Sezione 3: Pizza Watch – Dati Reali -->
+    <!-- 🍕 Section 3: Pizza Watch – Real Data -->
     <section>
       <h2>🚨 Pizza Watch</h2>
       <div class="alert-box">
-        🍕 <strong>June 12, 2025 – 6:59 PM ET</strong> – Google Maps “Popular Times” segnala un aumento <em>estremo</em> in almeno 4 pizzerie (<strong>We, The Pizza</strong>, <strong>Domino’s</strong>, <strong>District Pizza Palace</strong>) intorno al Pentagono, un’ora prima dell’attacco israeliano all’Iran. Fonte: “Pentagon Pizza Report” su X.
+        🍕 <strong>July 2, 2025 – 10:00 PM ET</strong> – Recent crowd levels:
+        <ul>
+          <li><strong>District Pizza Palace</strong>: a bit crowded</li>
+          <li><strong>Wiseguy, Massachusetts Ave NW</strong>: a bit crowded</li>
+          <li><strong>Domino’s Pizza, Columbia Pike</strong>: busier than usual</li>
+        </ul>
       </div>
-      <p>Fonti: Fast Company, NDTV, Business Standard, The Donut</p>
+      <p>Source: Google Maps “Popular Times”</p>
     </section>
 
-    <!-- 🍕 Sezione 4: Latest Geo Events -->
+    <!-- 🍕 Section 4: Latest Geo Events -->
     <section>
       <h2>📰 Latest Geo Events</h2>
       <ul>
@@ -141,13 +143,13 @@
       </ul>
     </section>
 
-    <!-- 🍕 Sezione 5: Global Index Chart (placeholder) -->
+    <!-- 🍕 Section 5: Global Pizza Index Chart -->
     <section>
       <h2>📈 Global Pizza Index</h2>
-      <p>[Chart Placeholder] Daily average pizza traffic summed across surveillance zone. Big jumps often mean big decisions ahead.</p>
+      <canvas id="pizzaChart" width="400" height="200"></canvas>
     </section>
 
-    <!-- 🍕 Sezione 6: About & Disclaimer -->
+    <!-- 🍕 Section 6: About & Disclaimer -->
     <section>
       <h2>👤 About This Project</h2>
       <p><strong>What is the Pizza Index?</strong><br>
@@ -173,29 +175,52 @@
     const pizzerias = [
       {
         coords: [38.8764, -77.0517],
-        name: "Pentagon Pizza Hub",
-        info: "🗓️ May 1, 2025<br>📊 +35% in pizza sales<br>🍕 Source: Delivery Logs"
-      },
-      {
-        coords: [38.8893, -77.0502],
-        name: "Pizza City Express",
-        info: "🗓️ June 10, 2025<br>📊 +40% sales<br>🧑‍✈️ Event: Military conference"
-      },
-      {
-        coords: [38.8529, -77.0570],
-        name: "Flippin’ Pizza",
-        info: "🗓️ June 12, 2025<br>📊 +55% orders<br>🌍 Context: Israel-Iran escalation"
-      },
-      {
-        coords: [38.8764, -77.0517],
         name: "District Pizza Palace",
-        info: "🗓️ June 12, 2025 – 6:59 PM ET<br>📊 Sudden huge spike noted on Google Maps<br>🍕 Reported by Pentagon Pizza Report on X"
+        info: "🗓️ July 2, 2025 – 10:00 PM ET<br>📊 A bit crowded (Google Maps Popular Times)"
+      },
+      {
+        coords: [38.9071, -77.0531],
+        name: "Wiseguy, Massachusetts Ave NW",
+        info: "🗓️ July 2, 2025 – 10:00 PM ET<br>📊 A bit crowded (Google Maps Popular Times)"
+      },
+      {
+        coords: [38.8675, -77.0889],
+        name: "Domino’s Pizza, Columbia Pike",
+        info: "🗓️ July 2, 2025 – 10:00 PM ET<br>📊 Busier than usual (Google Maps Popular Times)"
       }
     ];
 
     pizzerias.forEach(p => {
       const marker = L.marker(p.coords).addTo(map)
         .bindPopup(`<strong>${p.name}</strong><br>${p.info}`);
+    });
+  </script>
+
+  <script>
+    const ctx = document.getElementById('pizzaChart').getContext('2d');
+    const pizzaChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['June 29', 'June 30', 'July 1', 'July 2'],
+        datasets: [{
+          label: 'Pizza Traffic',
+          data: [120, 150, 170, 160], // example data
+          borderColor: '#d8411f',
+          backgroundColor: 'rgba(216, 65, 31, 0.2)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 5,
+          pointHoverRadius: 7
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
     });
   </script>
 </body>
