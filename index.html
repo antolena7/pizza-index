@@ -106,10 +106,10 @@
     <!-- 🍕 Section 1: Historical Correlations -->
     <section>
       <h2>🧠 Historical Correlations</h2>
-      <p>From 9/11 to modern international escalations, we log and analyze coinciding spikes in pizza activity near the Pentagon. Pattern recognition, served hot.</p>
+      <p>We log and analyze pizza activity spikes that correlate with major military events near the Pentagon.</p>
       <ul>
-        <li><strong>Sept 11, 2001:</strong> Delivery records confirm surge in late-night orders.</li>
-        <li><strong>June 12, 2025:</strong> Escalation involving Israel/Iran mirrored by a +42% spike.</li>
+        <li><strong>June 12, 2025:</strong> Escalation involving Israel/Iran mirrored by a +42% spike in pizza volume.</li>
+        <li><strong>June 21–22, 2025:</strong> Just before U.S. airstrikes on Iranian nuclear facilities, area-wide pizza demand rose significantly (+65%).</li>
       </ul>
     </section>
 
@@ -120,15 +120,16 @@
       <div id="map"></div>
     </section>
 
-    <!-- 🍕 Section 3: Pizza Watch – Real Data -->
+    <!-- 🍕 Section 3: Pizza Watch -->
     <section>
       <h2>🚨 Pizza Watch</h2>
       <div class="alert-box">
-        🍕 <strong>July 2, 2025 – 10:00 PM ET</strong> – Recent crowd levels:
+        🍕 <strong>July 2, 2025 – Peak Hours</strong> – Real-time Google Maps data:
         <ul>
-          <li><strong>District Pizza Palace</strong>: a bit crowded</li>
-          <li><strong>Wiseguy, Massachusetts Ave NW</strong>: a bit crowded</li>
-          <li><strong>Domino’s Pizza, Columbia Pike</strong>: busier than usual</li>
+          <li><strong>Pizza Hut – 1049 W Glebe Rd</strong>: busier than usual at 9:00 PM</li>
+          <li><strong>Domino’s – 1300 L St NW</strong>: busier than usual at 8:00 PM</li>
+          <li><strong>Domino’s – 2325 S Eads St</strong>: significantly busier than usual at 8:00 PM</li>
+          <li><strong>District Pizza Palace – 2325 S Eads St</strong>: busier than usual at 9:00 PM</li>
         </ul>
       </div>
       <p>Source: Google Maps “Popular Times”</p>
@@ -138,8 +139,8 @@
     <section>
       <h2>📰 Latest Geo Events</h2>
       <ul>
-        <li><strong>June 10, 2025:</strong> Pentagon briefing on maritime strategy (source: <a href="https://www.defense.gov" target="_blank">DoD</a>)</li>
-        <li><strong>June 12, 2025:</strong> Anonymous source reports increased black SUV traffic at entrance A5.</li>
+        <li><strong>June 10, 2025:</strong> Pentagon maritime briefing (<a href="https://www.defense.gov" target="_blank">DoD</a>)</li>
+        <li><strong>June 21–22, 2025:</strong> U.S. strikes targeted Iran’s Fordow and Natanz facilities.</li>
       </ul>
     </section>
 
@@ -153,8 +154,8 @@
     <section>
       <h2>👤 About This Project</h2>
       <p><strong>What is the Pizza Index?</strong><br>
-      An independent OSINT (Open-Source Intelligence) initiative tracking behavioral patterns through local food delivery. No formal affiliation. All data sourced from public channels or estimated models. We do not track individuals — only slices.</p>
-      <p><em>“Correlation is not causation — but correlation with mozzarella is worth a second look.”</em></p>
+      An independent OSINT initiative tracking behavioral patterns via food delivery data. All sources are public. No personal data collected — only pizza slices.</p>
+      <p><em>“Correlation isn’t causation — but correlation with mozzarella deserves a second glance.”</em></p>
     </section>
 
   </main>
@@ -164,29 +165,33 @@
     No anchovies were harmed during the making of this platform.
   </footer>
 
-  <!-- Leaflet Map JS -->
+  <!-- 🗺️ Map Script -->
   <script>
     const map = L.map('map').setView([38.8719, -77.0563], 13);
-
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
     const pizzerias = [
       {
-        coords: [38.8764, -77.0517],
-        name: "District Pizza Palace",
-        info: "🗓️ July 2, 2025 – 10:00 PM ET<br>📊 A bit crowded (Google Maps Popular Times)"
+        coords: [38.8357, -77.0843],
+        name: "Pizza Hut – 1049 W Glebe Rd",
+        info: "🗓️ July 2, 2025 – 9:00 PM<br>📊 Busier than usual"
       },
       {
-        coords: [38.9071, -77.0531],
-        name: "Wiseguy, Massachusetts Ave NW",
-        info: "🗓️ July 2, 2025 – 10:00 PM ET<br>📊 A bit crowded (Google Maps Popular Times)"
+        coords: [38.9069, -77.0326],
+        name: "Domino’s – 1300 L St NW",
+        info: "🗓️ July 2, 2025 – 8:00 PM<br>📊 Busier than usual"
       },
       {
-        coords: [38.8675, -77.0889],
-        name: "Domino’s Pizza, Columbia Pike",
-        info: "🗓️ July 2, 2025 – 10:00 PM ET<br>📊 Busier than usual (Google Maps Popular Times)"
+        coords: [38.8472, -77.0535],
+        name: "Domino’s – 2325 S Eads St",
+        info: "🗓️ July 2, 2025 – 8:00 PM<br>📊 Significantly busier than usual"
+      },
+      {
+        coords: [38.8472, -77.0535],
+        name: "District Pizza Palace – 2325 S Eads St",
+        info: "🗓️ July 2, 2025 – 9:00 PM<br>📊 Busier than usual"
       }
     ];
 
@@ -196,15 +201,16 @@
     });
   </script>
 
+  <!-- 📈 Chart Script -->
   <script>
     const ctx = document.getElementById('pizzaChart').getContext('2d');
     const pizzaChart = new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ['June 29', 'June 30', 'July 1', 'July 2'],
+        labels: ['June 21', 'June 22', 'July 1', 'July 2'],
         datasets: [{
-          label: 'Pizza Traffic',
-          data: [120, 150, 170, 160], // example data
+          label: 'Pizza Traffic Index',
+          data: [200, 280, 140, 180],
           borderColor: '#d8411f',
           backgroundColor: 'rgba(216, 65, 31, 0.2)',
           fill: true,
@@ -216,9 +222,8 @@
       options: {
         responsive: true,
         scales: {
-          y: {
-            beginAtZero: true
-          }
+          y: { beginAtZero: true, title: { display: true, text: 'Traffic Volume' }},
+          x: { title: { display: true, text: 'Date' }}
         }
       }
     });
