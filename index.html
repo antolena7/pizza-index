@@ -180,7 +180,59 @@
       An independent OSINT initiative tracking behavioral patterns via food delivery data. All sources are public. No personal data collected — only pizza slices.</p>
       <p><em>“Correlation isn’t causation — but correlation with mozzarella deserves a second glance.”</em></p>
     </section>
+    
+<!-- 🍕 Sezione 7: Submit a Report -->
+<section>
+  <h2>🕵️ Submit a Report</h2>
+  <p>Notice anything strange? Suspicious pizza spikes? Black SUVs and cheese trails? Submit it below anonymously. No email required, but you can leave one if you'd like a reply.</p>
 
+  <!-- Begin Brevo Form -->
+  <div class="sib-form" style="text-align: center; background-color: #EFF2F7;">
+    <div id="sib-form-container" class="sib-form-container">
+      <div id="sib-container" class="sib-container--large sib-container--vertical" style="background-color:#ffffff; max-width:540px; margin:auto; padding:20px; border:1px solid #C0CCD9; border-radius:5px;">
+        <form id="sib-form" method="POST" action="https://1faa7df7.sibforms.com/serve/MUIFALQEGfivxA_hnUSNcWqZfWGHi7uoLL0Lq9UAULlyqG2qzDBwXG2RcWjyVJMwhVvsR4kbzf4hQCuHe8r-rAq7PZUtAP7_qOH-sYhnl1yfAGFMWyAVc49fh1Hy54sLE9kLkA_phhS2BPflyQFn6jyIFQBHp39L9ePIFZR0KOWDsS0NT9i9nK9Sf39NIgGya0Ja0Kz8XLWqh0Cw" data-type="subscription">
+          
+          <!-- Descrizione segnalazione -->
+          <div style="margin-bottom: 1rem; text-align: left;">
+            <label for="ANOMALY_TYPE" style="font-weight:bold;">What did you observe? Be specific if possible.</label><br>
+            <textarea id="ANOMALY_TYPE" name="ANOMALY_TYPE" rows="5" style="width:100%; padding:10px;" placeholder="e.g. Sudden increase in pizza bikes at Pentagon Gate A5 around 7PM..."></textarea>
+          </div>
+
+          <!-- Email (opzionale) -->
+          <div style="margin-bottom: 1rem; text-align: left;">
+            <label for="EMAIL" style="font-weight:bold;">Your email (optional)</label><br>
+            <input type="email" id="EMAIL" name="EMAIL" placeholder="you@example.com" style="width:100%; padding:10px;" />
+          </div>
+
+          <!-- Checkbox privacy -->
+          <div style="margin-bottom: 1rem; text-align: left;">
+            <label style="display: flex; align-items: flex-start;">
+              <input type="checkbox" id="OPT_IN" name="OPT_IN" required style="margin-right:10px; margin-top:5px;" />
+              <span>I agree to the use of this info for open-source pizza surveillance purposes. 🛰️🍕</span>
+            </label>
+          </div>
+
+          <!-- Bottone invio -->
+          <div style="text-align: left;">
+            <button type="submit" style="background-color:#d8411f; color:white; padding:10px 20px; border:none; border-radius:3px; font-weight:bold; cursor:pointer;">
+              Submit Report
+            </button>
+          </div>
+
+          <!-- Campo antispam invisibile -->
+          <input type="text" name="email_address_check" value="" class="input--hidden" style="display:none;">
+          <input type="hidden" name="locale" value="en">
+        </form>
+
+        <!-- Messaggio successo -->
+        <div id="success-message" class="sib-form-message-panel" style="margin-top:1rem; display:none; color:green;">
+          Thank you for your report. Your pizza intelligence is now in the oven. 🍕🛰️
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Brevo Form -->
+</section>
   </main>
 
   <footer>
