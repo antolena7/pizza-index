@@ -7,12 +7,12 @@
   <meta name="description" content="Track real-time pizza activity near the Pentagon. An OSINT project monitoring pizza delivery spikes linked to geopolitical events. Slices tell the story." />
   <meta name="google-site-verification" content="UGYZ7IQOeo1HPOEsYdf4gJbW9D-NpOL2fvuzO7pj13c" />
   
-<!-- Social Preview Metadata -->
-<meta property="og:title" content="The Pizza Index – Pentagon Activity Tracker" />
-<meta property="og:description" content="🍕 OSINT project tracking Pentagon pizza spikes linked to geopolitical events. Slices tell the story." />
-<meta property="og:image" content="https://thepizzaindex.netlify.app/assets/Pizza_Index.png" />
-<meta property="og:url" content="https://thepizzaindex.netlify.app/" />
-<meta name="twitter:card" content="summary_large_image" />
+  <!-- Social Preview Metadata -->
+  <meta property="og:title" content="The Pizza Index – Pentagon Activity Tracker" />
+  <meta property="og:description" content="🍕 OSINT project tracking Pentagon pizza spikes linked to geopolitical events. Slices tell the story." />
+  <meta property="og:image" content="https://thepizzaindex.netlify.app/assets/Pizza_Index.png" />
+  <meta property="og:url" content="https://thepizzaindex.netlify.app/" />
+  <meta name="twitter:card" content="summary_large_image" />
   
   <!-- 🔍 SEO Structured Data -->
   <script type="application/ld+json">
@@ -29,6 +29,7 @@
     }
   }
   </script>
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-35M1TNJ0Y4"></script>
   <script>
@@ -73,15 +74,35 @@
     }
 
     main {
-      padding: 1rem;
       max-width: 1000px;
       margin: auto;
+      padding: 1rem;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    /* Content area */
+    #content {
+      flex: 1 1 600px;
+      min-width: 300px;
+    }
+
+    /* Sidebar form */
+    #report-form {
+      flex: 0 0 320px;
+      background: #fff1e0;
+      border: 2px solid #d8411f;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 2px 2px 8px rgba(216, 65, 31, 0.2);
+      font-size: 0.9rem;
     }
 
     h2 {
       font-family: 'Amatic SC', cursive;
       font-size: 2rem;
-      margin-top: 2rem;
+      margin-top: 0;
       color: #d8411f;
     }
 
@@ -115,6 +136,51 @@
       color: #d8411f;
       text-decoration: none;
     }
+
+    /* Form inputs */
+    form label {
+      font-weight: bold;
+    }
+    form input[type="email"],
+    form textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.5rem;
+      border: 1px solid #d8411f;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 1rem;
+      margin-top: 0.25rem;
+    }
+    form textarea {
+      resize: vertical;
+    }
+
+    form button {
+      background-color: #d8411f;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+    form button:hover {
+      background-color: #b53318;
+    }
+
+    /* Responsive for mobile: stack vertically */
+    @media (max-width: 768px) {
+      main {
+        flex-direction: column;
+      }
+      #report-form {
+        width: 100%;
+        flex: none;
+        margin-top: 2rem;
+      }
+    }
   </style>
 </head>
 
@@ -125,87 +191,89 @@
   </header>
 
   <main>
-
-    <!-- 🍕 Section 1: Historical Correlations -->
-    <section>
-      <h2>🧠 Historical Correlations</h2>
-      <p>We log and analyze pizza activity spikes that correlate with major military events near the Pentagon.</p>
-      <ul>
-        <li><strong>June 12, 2025:</strong> Escalation involving Israel/Iran mirrored by a +42% spike in pizza volume.</li>
-        <li><strong>June 21–22, 2025:</strong> Just before U.S. airstrikes on Iranian nuclear facilities, area-wide pizza demand rose significantly (+65%).</li>
-      </ul>
-    </section>
-
-    <!-- 🍕 Section 2: Interactive Map -->
-    <section>
-      <h2>📍 Pizza Surveillance Map</h2>
-      <p>Click on any outlet to see delivery spikes, historical data, and proximity to the Pentagon.</p>
-      <div id="map"></div>
-    </section>
-
-    <!-- 🍕 Section 3: Pizza Watch -->
-    <section>
-      <h2>🚨 Pizza Watch</h2>
-      <div class="alert-box">
-        🍕 <strong>July 3, 2025 – Peak Hours</strong> – Real-time Google Maps data:
+    <div id="content">
+      <!-- 🍕 Section 1: Historical Correlations -->
+      <section>
+        <h2>🧠 Historical Correlations</h2>
+        <p>We log and analyze pizza activity spikes that correlate with major military events near the Pentagon.</p>
         <ul>
-          <li><strong>Pizza Hut – 1049 W Glebe Rd</strong>: busier than usual at 8:30 PM</li>
-          <li><strong>Domino’s – 2325 S Eads St</strong>: busier than usual at 9:00 PM</li>
-          <li><strong>District Pizza Palace – 2325 S Eads St</strong>: extremely busy at 7:30 PM</li>
+          <li><strong>June 12, 2025:</strong> Escalation involving Israel/Iran mirrored by a +42% spike in pizza volume.</li>
+          <li><strong>June 21–22, 2025:</strong> Just before U.S. airstrikes on Iranian nuclear facilities, area-wide pizza demand rose significantly (+65%).</li>
         </ul>
-      </div>
-      <p>Source: Google Maps “Popular Times”</p>
-    </section>
-    <section id="report-form"><section id="report-form">
-  <h2>🕵️ Report Suspicious Pizza Activity</h2>
-  <p>Notice anything strange? Suspicious pizza spikes? Black SUVs and cheese trails? Submit it below anonymously.</p>
+      </section>
 
-  <form 
-    action="https://formsubmit.co/thepizzaindextracker@gmail.com" 
-    method="POST"
-    onsubmit="alert('Thanks for your report! 🍕');"
-  >
-    <!-- Optional settings -->
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_subject" value="🚨 New Pizza Index Report!">
-    <input type="hidden" name="_next" value="https://thepizzaindex.netlify.app/thanks.html">
+      <!-- 🍕 Section 2: Interactive Map -->
+      <section>
+        <h2>📍 Pizza Surveillance Map</h2>
+        <p>Click on any outlet to see delivery spikes, historical data, and proximity to the Pentagon.</p>
+        <div id="map"></div>
+      </section>
 
-    <label for="anomaly"><strong>What did you observe?</strong></label><br>
-    <textarea id="anomaly" name="anomaly" rows="5" cols="50" placeholder="Describe suspicious delivery patterns near the Pentagon..." required></textarea><br><br>
+      <!-- 🍕 Section 3: Pizza Watch -->
+      <section>
+        <h2>🚨 Pizza Watch</h2>
+        <div class="alert-box">
+          🍕 <strong>July 3, 2025 – Peak Hours</strong> – Real-time Google Maps data:
+          <ul>
+            <li><strong>Pizza Hut – 1049 W Glebe Rd</strong>: busier than usual at 8:30 PM</li>
+            <li><strong>Domino’s – 2325 S Eads St</strong>: busier than usual at 9:00 PM</li>
+            <li><strong>District Pizza Palace – 2325 S Eads St</strong>: extremely busy at 7:30 PM</li>
+          </ul>
+        </div>
+        <p>Source: Google Maps “Popular Times”</p>
+      </section>
 
-    <label for="email"><strong>Email (optional)</strong></label><br>
-    <input type="email" id="email" name="email" placeholder="you@example.com"><br><br>
+      <!-- 🍕 Section 4: Latest Geo Events -->
+      <section>
+        <h2>📰 Latest Geo Events</h2>
+        <ul>
+          <li><strong>July 2, 2025:</strong> Trump confirms arms cut to Ukraine; Kremlin responds positively. Phone call with Putin covers Iran & Syria.</li>
+          <li><strong>July 3, 2025:</strong> Ceasefire framework accepted by Israel via Qatar–Egypt deal; Hamas delegation in Cairo.</li>
+          <li><strong>June 21–22, 2025:</strong> U.S. strikes targeted Iran’s Fordow and Natanz facilities.</li>
+        </ul>
+      </section>
 
-    <button type="submit" style="background-color: #d8411f; color: white; border: none; padding: 0.5rem 1rem; font-weight: bold; cursor: pointer; border-radius: 5px;">
-      Submit Report 🍕
-    </button>
-  </form>
-</section>
+      <!-- 🍕 Section 5: Global Pizza Index Chart -->
+      <section>
+        <h2>📈 Global Pizza Index</h2>
+        <canvas id="pizzaChart" width="400" height="200"></canvas>
+      </section>
 
-    <!-- 🍕 Section 4: Latest Geo Events -->
-    <section>
-      <h2>📰 Latest Geo Events</h2>
-      <ul>
-        <li><strong>July 2, 2025:</strong> Trump confirms arms cut to Ukraine; Kremlin responds positively. Phone call with Putin covers Iran & Syria.</li>
-        <li><strong>July 3, 2025:</strong> Ceasefire framework accepted by Israel via Qatar–Egypt deal; Hamas delegation in Cairo.</li>
-        <li><strong>June 21–22, 2025:</strong> U.S. strikes targeted Iran’s Fordow and Natanz facilities.</li>
-      </ul>
-    </section>
+      <!-- 🍕 Section 6: About & Disclaimer -->
+      <section>
+        <h2>👤 About This Project</h2>
+        <p><strong>What is the Pizza Index?</strong><br>
+        An independent OSINT initiative tracking behavioral patterns via food delivery data. All sources are public. No personal data collected — only pizza slices.</p>
+        <p><em>“Correlation isn’t causation — but correlation with mozzarella deserves a second glance.”</em></p>
+      </section>
+    </div>
 
-    <!-- 🍕 Section 5: Global Pizza Index Chart -->
-    <section>
-      <h2>📈 Global Pizza Index</h2>
-      <canvas id="pizzaChart" width="400" height="200"></canvas>
-    </section>
+    <!-- Sidebar with the report form -->
+    <aside id="report-form">
+      <h2>🕵️ Report Suspicious Pizza Activity</h2>
+      <p>Notice anything strange? Suspicious pizza spikes? Black SUVs and cheese trails? Submit it below anonymously.</p>
 
-    <!-- 🍕 Section 6: About & Disclaimer -->
-    <section>
-      <h2>👤 About This Project</h2>
-      <p><strong>What is the Pizza Index?</strong><br>
-      An independent OSINT initiative tracking behavioral patterns via food delivery data. All sources are public. No personal data collected — only pizza slices.</p>
-      <p><em>“Correlation isn’t causation — but correlation with mozzarella deserves a second glance.”</em></p>
+      <form 
+        action="https://formsubmit.co/thepizzaindextracker@gmail.com" 
+        method="POST"
+        onsubmit="alert('Thanks for your report! 🍕');"
+      >
+        <!-- Optional settings -->
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_subject" value="🚨 New Pizza Index Report!">
+        <input type="hidden" name="_next" value="https://thepizzaindex.netlify.app/thanks.html">
 
-</section>
+        <label for="anomaly"><strong>What did you observe?</strong></label><br>
+        <textarea id="anomaly" name="anomaly" rows="5" placeholder="Describe suspicious delivery patterns near the Pentagon..." required></textarea><br><br>
+
+        <label for="email"><strong>Email (optional)</strong></label><br>
+        <input type="email" id="email" name="email" placeholder="you@example.com"><br><br>
+
+        <button type="submit">
+          Submit Report 🍕
+        </button>
+      </form>
+    </aside>
   </main>
 
   <footer>
@@ -244,7 +312,6 @@
     });
   </script>
 
-  ...
   <!-- 📈 Chart Script -->
   <script>
     const ctx = document.getElementById('pizzaChart').getContext('2d');
@@ -272,9 +339,6 @@
       }
     });
   </script>
-
-  <!-- 🔧 Script necessario per visualizzare il modulo Brevo -->
-  <script src="https://sibforms.com/forms/end-form/build/main.js"></script>
 
 </body>
 </html>
