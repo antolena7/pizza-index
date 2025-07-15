@@ -172,15 +172,73 @@
 
     /* Responsive for mobile: stack vertically */
     @media (max-width: 768px) {
-      main {
-        flex-direction: column;
-      }
-      #report-form {
-        width: 100%;
-        flex: none;
-        margin-top: 2rem;
-      }
-    }
+  body {
+    border-left: none;
+    border-right: none;
+    padding: 0 0.5rem;
+  }
+
+  header h1 {
+    font-size: 2.2rem;
+  }
+
+  main {
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+
+  #content {
+    width: 100%;
+  }
+
+  #report-form {
+    width: 100%;
+    flex: none;
+    margin-top: 2rem;
+    padding: 1rem;
+  }
+
+  #map {
+    height: 350px;
+    border: none;
+    border-radius: 0;
+    width: 100vw;
+    margin-left: -0.5rem;
+  }
+
+  .alert-box {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  #news-cards div {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+  }
+
+  .leaflet-popup-content {
+    font-size: 0.9rem;
+  }
+
+  canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  footer {
+    font-size: 10px;
+    padding: 1rem;
+  }
+}
   </style>
 </head>
 
