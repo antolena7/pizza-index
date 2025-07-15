@@ -327,34 +327,67 @@ setInterval(loadNews, 10 * 60 * 1000);
 
   <!-- 🗺️ Map Script -->
   <script>
-    const map = L.map('map').setView([38.8719, -77.0563], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+  const map = L.map('map').setView([38.8719, -77.0563], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
 
-    const pizzerias = [
-      {
-        coords: [38.8357, -77.0843],
-        name: "Pizza Hut – 1049 W Glebe Rd",
-        info: "🗓️ July 3, 2025 – 8:30 PM<br>📊 Busier than usual"
-      },
-      {
-        coords: [38.8472, -77.0535],
-        name: "Domino’s – 2325 S Eads St",
-        info: "🗓️ July 3, 2025 – 9:00 PM<br>📊 Busier than usual"
-      },
-      {
-        coords: [38.8472, -77.0535],
-        name: "District Pizza Palace – 2325 S Eads St",
-        info: "🗓️ July 3, 2025 – 7:30 PM<br>📊 Extremely busy"
-      }
-    ];
+  const pizzerias = [
+    {
+      coords: [38.853801, -77.071426],
+      name: "Extreme Pizza",
+      address: "1419 S Fern St, Arlington, VA 22202, USA",
+      datetime: "July 14, 2025, 1:00 PM",
+      status: "Less busier than usual"
+    },
+    {
+      coords: [38.857728, -77.055621],
+      name: "We, The Pizza",
+      address: "2100 Crystal Dr, Arlington, VA 22202, USA",
+      datetime: "July 14, 2025, 1:00 PM",
+      status: "Normal"
+    },
+    {
+      coords: [38.8472, -77.0535],
+      name: "District Pizza Palace",
+      address: "2325 S Eads St, Arlington, VA 22202, USA",
+      datetime: "July 14, 2025, 1:00 PM",
+      status: "Busier than usual"
+    },
+    {
+      coords: [38.8663, -77.0750],
+      name: "California Pizza Kitchen at Pentagon",
+      address: "1201 S Hayes St, Arlington, VA 22202, USA",
+      datetime: "July 14, 2025, 1:00 PM",
+      status: "Busier than usual"
+    },
+    {
+      coords: [38.9015, -77.0383],
+      name: "Domino's Pizza",
+      address: "2029 K St NW, Washington, DC 20006, USA",
+      datetime: "July 14, 2025, 1:00 PM",
+      status: "Less busier than usual"
+    },
+    {
+      coords: [38.8477, -77.0503],
+      name: "Domino's Pizza",
+      address: "3535 S Ball St, Arlington, VA 22202, USA",
+      datetime: "July 14, 2025, 1:00 PM",
+      status: "Busier than usual"
+    }
+  ];
 
-    pizzerias.forEach(p => {
-      const marker = L.marker(p.coords).addTo(map)
-        .bindPopup(`<strong>${p.name}</strong><br>${p.info}`);
-    });
-  </script>
+  pizzerias.forEach(p => {
+    const marker = L.marker(p.coords).addTo(map);
+    const popupContent = `
+      <strong>${p.name}</strong><br>
+      ${p.address}<br>
+      <em>${p.datetime}</em><br>
+      <strong>Status:</strong> ${p.status}
+    `;
+    marker.bindPopup(popupContent);
+  });
+</script>
 
   <!-- 📈 Chart Script -->
   <script>
