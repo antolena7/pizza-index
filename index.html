@@ -241,7 +241,41 @@
 }
   </style>
 </head>
+<script>
+  function copyLink() {
+    navigator.clipboard.writeText("https://thepizzaindex.netlify.app").then(function() {
+      document.getElementById("copy-confirmation").style.display = "block";
+      setTimeout(() => {
+        document.getElementById("copy-confirmation").style.display = "none";
+      }, 2000);
+    });
+  }
+</script>
+  <!-- Floating Share Button -->
+<a href="https://api.whatsapp.com/send?text=Check%20out%20The%20Pizza%20Index!%20🍕%20https%3A%2F%2Fthepizzaindex.netlify.app" target="_blank" id="floating-share">
+  🍕 Share
+</a>
 
+<style>
+  #floating-share {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #d8411f;
+    color: white;
+    padding: 0.7rem 1rem;
+    border-radius: 50px;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+    z-index: 1000;
+    transition: background 0.3s;
+  }
+  #floating-share:hover {
+    background: #b53318;
+  }
+</style>
 <body>
   <header>
     <h1>Pizza Index</h1>
@@ -377,7 +411,32 @@ setInterval(loadNews, 10 * 60 * 1000);
       </form>
     </aside>
   </main>
-
+  
+<section id="share-this-slice" style="text-align: center; padding: 2rem 1rem; background: #fff4ee; border-top: 2px dashed #d8411f;">
+  <h2 style="color:#d8411f; font-family: 'Amatic SC', cursive; font-size: 2.5rem;">🍕 Share This Slice</h2>
+  <p style="max-width: 600px; margin: auto; font-size: 1rem;">
+    If you found this tasty, share it. One slice could expose a thousand secrets.
+  </p>
+    <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
+    <button onclick="copyLink()" style="background-color: #d8411f; color: white; padding: 0.6rem 1rem; font-size: 1rem; border: none; border-radius: 6px; cursor: pointer;">
+      📎 Copy Link
+    </button>
+    <a href="https://twitter.com/intent/tweet?text=Pizza%20spikes%20near%20the%20Pentagon%3F%20You%20need%20to%20see%20this.%20🍕%20https%3A%2F%2Fthepizzaindex.netlify.app" target="_blank" style="color: #d8411f; font-weight: bold;">
+      🐦 Tweet
+    </a>
+    <a href="https://t.me/share/url?url=https://thepizzaindex.netlify.app&text=This%20OSINT%20pizza%20site%20is%20wild%20🍕" target="_blank" style="color: #0088cc; font-weight: bold;">
+      ✈️ Telegram
+    </a>
+    <a href="mailto:?subject=Check%20this%20out!&body=Pentagon%20pizza%20spikes%20explained%20🍕%20https://thepizzaindex.netlify.app" style="color: #d8411f; font-weight: bold;">
+      ✉️ Email
+    </a>
+    <a href="https://www.reddit.com/submit?url=https://thepizzaindex.netlify.app&title=Pentagon%20Pizza%20Spikes%20are%20Real.%20OSINT%20says%20so.%20🍕" target="_blank" style="color: #ff4500; font-weight: bold;">
+      👽 Reddit
+    </a>
+  </div>
+  <p id="copy-confirmation" style="color: green; display: none; margin-top: 1rem;">✅ Link copied!</p>
+</section>
+  
   <footer>
     &copy; 2025 Classified Pizza Initiative. <br>
     No anchovies were harmed during the making of this platform.
@@ -395,29 +454,29 @@ setInterval(loadNews, 10 * 60 * 1000);
       coords: [38.853801, -77.071426],
       name: "Extreme Pizza",
       address: "1419 S Fern St, Arlington, VA 22202, USA",
-      datetime: "July 14, 2025, 1:00 PM",
-      status: "Less busier than usual"
+      datetime: "July 15, 2025, 4:00 PM",
+      status: "A bit busier than usual"
     },
     {
       coords: [38.857728, -77.055621],
       name: "We, The Pizza",
       address: "2100 Crystal Dr, Arlington, VA 22202, USA",
-      datetime: "July 14, 2025, 1:00 PM",
-      status: "Normal"
+      datetime: "July 15, 2025, 4:00 PM",
+      status: "Less busier than usual"
     },
     {
       coords: [38.8472, -77.0535],
       name: "District Pizza Palace",
       address: "2325 S Eads St, Arlington, VA 22202, USA",
-      datetime: "July 14, 2025, 1:00 PM",
-      status: "Busier than usual"
+      datetime: "July 15, 2025, 4:00 PM",
+      status: "Less busier than usual"
     },
     {
       coords: [38.8663, -77.0750],
       name: "California Pizza Kitchen at Pentagon",
       address: "1201 S Hayes St, Arlington, VA 22202, USA",
-      datetime: "July 14, 2025, 1:00 PM",
-      status: "Busier than usual"
+      datetime: "July 15, 2025, 4:00 PM"
+      status: "Not busy"
     },
     {
       coords: [38.9015, -77.0383],
@@ -430,8 +489,8 @@ setInterval(loadNews, 10 * 60 * 1000);
       coords: [38.8477, -77.0503],
       name: "Domino's Pizza",
       address: "3535 S Ball St, Arlington, VA 22202, USA",
-      datetime: "July 14, 2025, 1:00 PM",
-      status: "Busier than usual"
+      datetime: "July 15, 2025, 4:00 PM",
+      status: "Less busier than usual"
     }
   ];
 
