@@ -352,6 +352,14 @@ const FEEDS = [
   { url: 'https://api.rss2json.com/v1/api.json?rss_url=http://feeds.bbci.co.uk/news/world/rss.xml', source: 'BBC' }
 ];
 
+const neutralReasons = [
+  "This event is significant for global geopolitical stability and may influence regional policies.",
+  "Key developments here could affect international relations and military strategies.",
+  "Important news that might have repercussions on diplomatic efforts and security measures.",
+  "This situation deserves attention due to its potential impact on global peace and conflict dynamics.",
+  "Ongoing events like this can reshape alliances and affect strategic decisions worldwide."
+];
+
 async function loadNews() {
   const container = document.getElementById('news-cards');
   container.innerHTML = '';
@@ -360,7 +368,8 @@ async function loadNews() {
     try {
       const res = await fetch(feed.url);
       const data = await res.json();
-      data.items.slice(0, 2).forEach(item => {
+
+      data.items.slice(0, 2).forEach((item, idx) => {
         const card = document.createElement('div');
         card.style.border = '2px dashed #d8411f';
         card.style.borderRadius = '8px';
@@ -372,10 +381,13 @@ async function loadNews() {
           ? item.title.slice(0, 77) + '…'
           : item.title;
 
+        // Cicla tra le frasi neutre per variare
+        const whyItMatters = neutralReasons[idx % neutralReasons.length];
+
         card.innerHTML = `
           <h3 style="margin-top:0;">${feed.source}: ${title}</h3>
           <p><em>${new Date(item.pubDate).toLocaleDateString()}</em></p>
-          <p><strong>Why it matters:</strong> This story could impact U.S./Pentagon strategy or shake the global stage — and maybe even trigger a pizza spike. 🍕</p>
+          <p><strong>Why it matters:</strong> ${whyItMatters}</p>
           <a href="${item.link}" target="_blank" style="color:#d8411f;">Read more</a>
         `;
 
@@ -388,7 +400,6 @@ async function loadNews() {
 }
 
 loadNews();
-// Optional: refresh automatically every 10 minutes
 setInterval(loadNews, 8 * 60 * 1000);
 </script>
 
