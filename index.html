@@ -324,18 +324,21 @@
       </section>
 
       <!-- 🍕 Section 3: Pizza Watch -->
-      <section>
-        <h2>🚨 Pizza Watch</h2>
-        <div class="alert-box">
-          🍕 <strong>July 3, 2025 – Peak Hours</strong> – Real-time Google Maps data:
-          <ul>
-            <li><strong>Pizza Hut – 1049 W Glebe Rd</strong>: busier than usual at 8:30 PM</li>
-            <li><strong>Domino’s – 2325 S Eads St</strong>: busier than usual at 9:00 PM</li>
-            <li><strong>District Pizza Palace – 2325 S Eads St</strong>: extremely busy at 7:30 PM</li>
-          </ul>
-        </div>
-        <p>Source: Google Maps “Popular Times”</p>
-      </section>
+<section>
+  <h2>🚨 Pizza Watch</h2>
+  <div class="alert-box">
+    🍕 <strong>July 15, 2025 – Peak Hours</strong> – Real-time Google Maps data:
+    <ul>
+      <li><strong>Extreme Pizza – 1419 S Fern St</strong>: a bit busier than usual at 4:00 PM</li>
+      <li><strong>We, The Pizza – 2100 Crystal Dr</strong>: less busy than usual at 4:00 PM</li>
+      <li><strong>District Pizza Palace – 2325 S Eads St</strong>: less busy than usual at 4:00 PM</li>
+      <li><strong>California Pizza Kitchen at Pentagon – 1201 S Hayes St</strong>: not busy at 4:00 PM</li>
+      <li><strong>Domino's Pizza – 3535 S Ball St</strong>: less busy than usual at 4:00 PM</li>
+      <li><strong>Domino's Pizza – 2029 K St NW</strong>: less busy than usual at 1:00 PM (July 14)</li>
+    </ul>
+  </div>
+  <p>Source: Google Maps “Popular Times”</p>
+</section>
 
 <section id="geo-news">
   <h2>📰 Live Geo Events</h2>
@@ -386,7 +389,7 @@ async function loadNews() {
 
 loadNews();
 // Optional: refresh automatically every 10 minutes
-setInterval(loadNews, 10 * 60 * 1000);
+setInterval(loadNews, 8 * 60 * 1000);
 </script>
 
 </section>
@@ -530,31 +533,72 @@ setInterval(loadNews, 10 * 60 * 1000);
 
   <!-- 📈 Chart Script -->
   <script>
-    const ctx = document.getElementById('pizzaChart').getContext('2d');
-    const pizzaChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['June 21', 'June 22', 'July 1', 'July 2', 'July 3'],
-        datasets: [{
-          label: 'Pizza Traffic Index',
-          data: [200, 280, 140, 180, 210],
-          borderColor: '#d8411f',
-          backgroundColor: 'rgba(216, 65, 31, 0.2)',
-          fill: true,
-          tension: 0.3,
-          pointRadius: 5,
-          pointHoverRadius: 7
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: { beginAtZero: true, title: { display: true, text: 'Traffic Volume' }},
-          x: { title: { display: true, text: 'Date' }}
-        }
+  const statusValues = {
+    "Normal": 100,
+    "Less busier than usual": 80,
+    "Busier than usual": 150,
+    "A bit busier than usual": 120,
+    "Not busy": 50
+  };
+
+  const pizzaDataByDate = {
+    "July 14": [
+      { name: "Extreme Pizza", status: "Less busier than usual" },
+      { name: "We, The Pizza", status: "Normal" },
+      { name: "District Pizza Palace", status: "Busier than usual" },
+      { name: "California Pizza Kitchen at Pentagon", status: "Busier than usual" },
+      { name: "Domino's Pizza (K St NW)", status: "Less busier than usual" },
+      { name: "Domino's Pizza (Ball St)", status: "Busier than usual" }
+    ],
+    "July 15": [
+      { name: "Extreme Pizza", status: "A bit busier than usual" },
+      { name: "We, The Pizza", status: "Less busier than usual" },
+      { name: "District Pizza Palace", status: "Less busier than usual" },
+      { name: "California Pizza Kitchen at Pentagon", status: "Not busy" },
+      { name: "Domino's Pizza (K St NW)", status: "Less busier than usual" },
+      { name: "Domino's Pizza (Ball St)", status: "Less busier than usual" }
+    ]
+  };
+
+  function calculateAvgValue(dayData) {
+    const values = dayData.map(p => statusValues[p.status] || 0);
+    return values.reduce((a, b) => a + b, 0) / values.length;
+  }
+
+  function prepareChartData(dataByDate) {
+    const labels = Object.keys(dataByDate);
+    const dataValues = labels.map(date => calculateAvgValue(dataByDate[date]));
+
+    return {
+      labels: labels,
+      datasets: [{
+        label: 'Pizza Traffic Index',
+        data: dataValues,
+        borderColor: '#d8411f',
+        backgroundColor: 'rgba(216, 65, 31, 0.2)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 5,
+        pointHoverRadius: 7
+      }]
+    };
+  }
+
+  const ctx = document.getElementById('pizzaChart').getContext('2d');
+  const chartData = prepareChartData(pizzaDataByDate);
+
+  const pizzaChart = new Chart(ctx, {
+    type: 'line',
+    data: chartData,
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: 'Traffic Volume' } },
+        x: { title: { display: true, text: 'Date' } }
       }
-    });
-  </script>
+    }
+  });
+</script>
 
 </body>
 </html>
