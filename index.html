@@ -325,14 +325,16 @@
 
       <!-- 🍕 Section 3: Pizza Watch -->
 <section>
-  <section id="pizza-watch" style="padding: 2rem; background: #fefefe;">
-  <h2 style="color: #ff4d00;">🍕 Pizza Watch</h2>
-  <ul style="list-style: none; padding-left: 0; font-family: sans-serif;">
-    <li><strong>Extreme Pizza</strong> – 5:40 PM – 🟠 Busier than usual – <em>Increased slice demand</em></li>
-    <li><strong>District Pizza Palace</strong> – 5:40 PM – 🔴 Much busier than usual – <em>Potential sauce surge detected</em></li>
-    <li><strong>We, The Pizza</strong> – 5:40 PM – 🟢 Less busy than usual – <em>Low slice turbulence</em></li>
-    <li><strong>California Pizza Kitchen</strong> – 5:40 PM – 🟢 Less busy than usual – <em>Calm before the cheese storm</em></li>
-    <li><strong>Domino’s – K Street</strong> – 1:00 PM – 🟢 Less busy than usual – <em>Quiet crust conditions</em></li>
+  <h2>🚨 Pizza Watch</h2>
+  <div class="alert-box">
+    🍕 <strong>July 15, 2025 – Peak Hours</strong> – Real-time Google Maps data:
+    <ul>
+      <li><strong>Extreme Pizza – 1419 S Fern St</strong>: a bit busier than usual at 4:00 PM</li>
+      <li><strong>We, The Pizza – 2100 Crystal Dr</strong>: less busy than usual at 4:00 PM</li>
+      <li><strong>District Pizza Palace – 2325 S Eads St</strong>: less busy than usual at 4:00 PM</li>
+      <li><strong>California Pizza Kitchen at Pentagon – 1201 S Hayes St</strong>: not busy at 4:00 PM</li>
+      <li><strong>Domino's Pizza – 3535 S Ball St</strong>: less busy than usual at 4:00 PM</li>
+      <li><strong>Domino's Pizza – 2029 K St NW</strong>: less busy than usual at 1:00 PM (July 14)</li>
     </ul>
   </div>
   <p>Source: Google Maps “Popular Times”</p>
@@ -477,81 +479,140 @@ setInterval(loadNews, 8 * 60 * 1000);
   </footer>
 
   <!-- 🗺️ Map Script -->
-<!-- Aggiungi dopo aver caricato Leaflet -->
-<script>
-  const pizzaPlaces = [
+  <script>
+  const map = L.map('map').setView([38.8719, -77.0563], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  const pizzerias = [
     {
+      coords: [38.853801, -77.071426],
       name: "Extreme Pizza",
-      address: "1419 S Fern St, Arlington, VA 22202",
-      lat: 38.8613,
-      lon: -77.0542,
-      time: "20/07/2025 17:40",
+      address: "1419 S Fern St, Arlington, VA 22202, USA",
+      datetime: "July 20, 2025, 5:40 PM",
       status: "Busier than usual"
     },
     {
+      coords: [38.857728, -77.055621],
       name: "We, The Pizza",
-      address: "2100 Crystal Dr, Arlington, VA 22202",
-      lat: 38.8576,
-      lon: -77.0503,
-      time: "20/07/2025 17:40",
+      address: "2100 Crystal Dr, Arlington, VA 22202, USA",
+      datetime: "July 20, 2025, 5:40 PM",
       status: "Less busier than usual"
     },
     {
+      coords: [38.8472, -77.0535],
       name: "District Pizza Palace",
-      address: "2325 S Eads St, Arlington, VA 22202",
-      lat: 38.8553,
-      lon: -77.0519,
-      time: "20/07/2025 17:40",
-      status: "Much busier than usual"
+      address: "2325 S Eads St, Arlington, VA 22202, USA",
+      datetime: "July 20, 2025, 5:40 PM",
+      status: "Much busy than usual"
     },
     {
-      name: "California Pizza Kitchen",
-      address: "1201 S Hayes St, Arlington, VA 22202",
-      lat: 38.8648,
-      lon: -77.0597,
-      time: "20/07/2025 17:40",
+      coords: [38.8663, -77.0750],
+      name: "California Pizza Kitchen at Pentagon",
+      address: "1201 S Hayes St, Arlington, VA 22202, USA",
+      datetime: "July 20, 2025, 5:40 PM",
       status: "Less busier than usual"
     },
     {
-      name: "Domino's Pizza - DC",
-      address: "2029 K St NW, Washington, DC 20006",
-      lat: 38.9028,
-      lon: -77.0459,
-      time: "14/07/2025 13:00",
-      status: "Less busier than usual"
+      coords: [38.9015, -77.0383],
+      name: "Domino's Pizza",
+      address: "2029 K St NW, Washington, DC 20006, USA",
+      datetime: "July 14, 2025, 1:00 PM",
+      status: "Less busy than usual"
     },
     {
-      name: "Domino's Pizza - Ball St",
-      address: "3535 S Ball St, Arlington, VA 22202",
-      lat: 38.8489,
-      lon: -77.0523,
-      time: "20/07/2025 17:40",
-      status: "Unknown"
+      coords: [38.8477, -77.0503],
+      name: "Domino's Pizza",
+      address: "3535 S Ball St, Arlington, VA 22202, USA",
+      datetime: "July 15, 2025, 4:00 PM",
+      status: "Busier than usual"
     }
   ];
 
-  const getColor = (status) => {
-    if (status.includes("Much busier")) return "red";
-    if (status.includes("Busier")) return "orange";
-    if (status.includes("Less")) return "green";
-    return "gray";
+  pizzerias.forEach(p => {
+    const marker = L.marker(p.coords).addTo(map);
+    const popupContent = `
+      <strong>${p.name}</strong><br>
+      ${p.address}<br>
+      <em>${p.datetime}</em><br>
+      <strong>Status:</strong> ${p.status}
+    `;
+    marker.bindPopup(popupContent);
+  });
+</script>
+
+  <!-- 📈 Chart Script -->
+  <script>
+  const statusValues = {
+    "Normal": 100,
+    "Less busier than usual": 80,
+    "Busier than usual": 150,
+    "A bit busier than usual": 120,
+    "Not busy": 50
   };
 
-  pizzaPlaces.forEach(place => {
-    const color = getColor(place.status);
-    const marker = L.circleMarker([place.lat, place.lon], {
-      radius: 8,
-      color: color,
-      fillColor: color,
-      fillOpacity: 0.8
-    }).addTo(map);
+  const pizzaDataByDate = {
+    "July 14": [
+      { name: "Extreme Pizza", status: "Less busier than usual" },
+      { name: "We, The Pizza", status: "Normal" },
+      { name: "District Pizza Palace", status: "Busier than usual" },
+      { name: "California Pizza Kitchen at Pentagon", status: "Busier than usual" },
+      { name: "Domino's Pizza (K St NW)", status: "Less busier than usual" },
+      { name: "Domino's Pizza (Ball St)", status: "Busier than usual" }
+    ],
+    "July 15": [
+      { name: "Extreme Pizza", status: "A bit busier than usual" },
+      { name: "We, The Pizza", status: "Less busier than usual" },
+      { name: "District Pizza Palace", status: "Less busier than usual" },
+      { name: "California Pizza Kitchen at Pentagon", status: "Not busy" },
+      { name: "Domino's Pizza (K St NW)", status: "Less busier than usual" },
+      { name: "Domino's Pizza (Ball St)", status: "Busier than usual" }
+    ],
+    "July 20": [
+      { name: "Extreme Pizza", status: "Busier than usual" },
+      { name: "We, The Pizza", status: "Less busier than usual" },
+      { name: "District Pizza Palace", status: "Much busier than usual" },
+      { name: "California Pizza Kitchen at Pentagon", status: "Not busy" },
+  };
 
-    marker.bindPopup(`
-      <b>${place.name}</b><br>
-      ${place.address}<br>
-      <i>${place.time}</i><br>
-      <b>Status:</b> ${place.status}
-    `);
+  function calculateAvgValue(dayData) {
+    const values = dayData.map(p => statusValues[p.status] || 0);
+    return values.reduce((a, b) => a + b, 0) / values.length;
+  }
+
+  function prepareChartData(dataByDate) {
+    const labels = Object.keys(dataByDate);
+    const dataValues = labels.map(date => calculateAvgValue(dataByDate[date]));
+
+    return {
+      labels: labels,
+      datasets: [{
+        label: 'Pizza Traffic Index',
+        data: dataValues,
+        borderColor: '#d8411f',
+        backgroundColor: 'rgba(216, 65, 31, 0.2)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 5,
+        pointHoverRadius: 7
+      }]
+    };
+  }
+
+  const ctx = document.getElementById('pizzaChart').getContext('2d');
+  const chartData = prepareChartData(pizzaDataByDate);
+
+  const pizzaChart = new Chart(ctx, {
+    type: 'line',
+    data: chartData,
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: 'Traffic Volume' } },
+        x: { title: { display: true, text: 'Date' } }
+      }
+    }
   });
 </script>
 
