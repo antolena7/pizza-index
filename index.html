@@ -520,34 +520,82 @@ setInterval(loadNews, 8 * 60 * 1000);
 
   
 <section id="share-this-slice" style="text-align: center; padding: 2rem 1rem; background: #fff4ee; border-top: 2px dashed #d8411f;">
-  <h2 style="color:#d8411f; font-family: 'Amatic SC', cursive; font-size: 2.5rem;">🍕 Share This Slice</h2>
-  <p style="max-width: 600px; margin: auto; font-size: 1rem;">
+  <h2 style="color:#d8411f; font-family: 'Amatic SC', cursive; font-size: 2.5rem; margin-bottom: 0.5rem;">🍕 Share This Slice</h2>
+  <p style="max-width: 600px; margin: 0.5rem auto 1.5rem; font-size: 1rem;">
     If you found this tasty, share it. One slice could expose a thousand secrets.
   </p>
-    <div style="margin-top: 1rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;">
-    <button onclick="copyLink()" style="background-color: #d8411f; color: white; padding: 0.6rem 1rem; font-size: 1rem; border: none; border-radius: 6px; cursor: pointer;">
-      📎 Copy Link
-    </button>
-    <a href="https://twitter.com/intent/tweet?text=Pizza%20spikes%20near%20the%20Pentagon%3F%20You%20need%20to%20see%20this.%20🍕%20https%3A%2F%2Fthepizzaindex.netlify.app" target="_blank" style="color: #d8411f; font-weight: bold;">
-      🐦 Tweet
-    </a>
-    <a href="https://t.me/share/url?url=https://thepizzaindex.netlify.app&text=This%20OSINT%20pizza%20site%20is%20wild%20🍕" target="_blank" style="color: #0088cc; font-weight: bold;">
-      ✈️ Telegram
-    </a>
-    <a href="mailto:?subject=Check%20this%20out!&body=Pentagon%20pizza%20spikes%20explained%20🍕%20https://thepizzaindex.netlify.app" style="color: #d8411f; font-weight: bold;">
-      ✉️ Email
-    </a>
-    <a href="https://www.reddit.com/submit?url=https://thepizzaindex.netlify.app&title=Pentagon%20Pizza%20Spikes%20are%20Real.%20OSINT%20says%20so.%20🍕" target="_blank" style="color: #ff4500; font-weight: bold;">
-      👽 Reddit
-    </a>
+
+  <div class="share-buttons" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem;">
+    <button onclick="copyLink()" class="share-btn copy-btn">📎 Copy Link</button>
+    <a href="https://twitter.com/intent/tweet?text=Pizza%20spikes%20near%20the%20Pentagon%3F%20You%20need%20to%20see%20this.%20🍕%20https%3A%2F%2Fthepizzaindex.netlify.app" target="_blank" class="share-btn twitter-btn">🐦 Tweet</a>
+    <a href="https://t.me/share/url?url=https://thepizzaindex.netlify.app&text=This%20OSINT%20pizza%20site%20is%20wild%20🍕" target="_blank" class="share-btn telegram-btn">✈️ Telegram</a>
+    <a href="mailto:?subject=Check%20this%20out!&body=Pentagon%20pizza%20spikes%20explained%20🍕%20https://thepizzaindex.netlify.app" class="share-btn email-btn">✉️ Email</a>
+    <a href="https://www.reddit.com/submit?url=https://thepizzaindex.netlify.app&title=Pentagon%20Pizza%20Spikes%20are%20Real.%20OSINT%20says%20so.%20🍕" target="_blank" class="share-btn reddit-btn">👽 Reddit</a>
   </div>
+
   <p id="copy-confirmation" style="color: green; display: none; margin-top: 1rem;">✅ Link copied!</p>
 </section>
-  
-  <footer>
-    &copy; 2025 Classified Pizza Initiative. <br>
-    No anchovies were harmed during the making of this platform.
-  </footer>
+
+<footer style="text-align: center; font-size: 12px; padding: 1.5rem; color: #777; background: #fff9f0; border-top: 2px dashed #d8411f;">
+  &copy; 2025 Classified Pizza Initiative. <br>
+  No anchovies were harmed during the making of this platform.
+</footer>
+
+<style>
+  .share-btn {
+    display: inline-block;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    min-width: 100px;
+    text-align: center;
+  }
+
+  .copy-btn {
+    background-color: #d8411f;
+    color: #fff;
+    border: none;
+  }
+  .copy-btn:hover {
+    background-color: #b53318;
+  }
+
+  .twitter-btn {
+    background-color: #1DA1F2;
+    color: #fff;
+  }
+  .twitter-btn:hover { background-color: #0d8ddb; }
+
+  .telegram-btn {
+    background-color: #0088cc;
+    color: #fff;
+  }
+  .telegram-btn:hover { background-color: #006699; }
+
+  .email-btn {
+    background-color: #d8411f;
+    color: #fff;
+  }
+  .email-btn:hover { background-color: #b53318; }
+
+  .reddit-btn {
+    background-color: #ff4500;
+    color: #fff;
+  }
+  .reddit-btn:hover { background-color: #e03d00; }
+
+  @media (max-width: 480px) {
+    .share-buttons {
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .share-btn { min-width: auto; width: 80%; }
+  }
+</style>
 
   <!-- 🗺️ Map Script -->
   <script>
