@@ -405,80 +405,98 @@ setInterval(loadNews, 8 * 60 * 1000);
 
 </section>
 
-<!-- Sidebar with user-reported anomalies -->
-<aside id="user-anomalies">
-  <h2>📡 Reported Anomalies</h2>
-  <p>Here’s what fellow pizza watchers have spotted:</p>
+<main style="max-width: 1000px; margin: auto; padding: 1rem; display: flex; flex-wrap: wrap; gap: 2rem;">
 
-  <div class="anomaly-card">
-    <p><strong>🟠 Anomaly:</strong> Folks on Bluesky are claiming that there’s been a dramatic surge in orders at <em>Pizzato’s Pizza</em>.</p>
-    <small>Submitted: 30/08/2025</small>
-  </div>
-</aside>
+  <!-- Reported Anomalies -->
+  <aside id="user-anomalies">
+    <h2>📡 Reported Anomalies</h2>
+    <p>Here’s what fellow pizza watchers have spotted:</p>
 
-<!-- Sidebar with the report form -->
-<aside id="report-form">
-  <h2>🕵️ Report Suspicious Pizza Activity</h2>
-  <p>Notice anything strange? Suspicious pizza spikes? Black SUVs and cheese trails? Submit it below anonymously.</p>
+    <div class="anomaly-card">
+      <p><strong>🟠 Anomaly:</strong> Folks on Bluesky are claiming that there’s been a dramatic surge in orders at <em>Pizzato’s Pizza</em>.</p>
+      <small>Submitted: 30/08/2025</small>
+    </div>
+    <div class="anomaly-card">
+      <p><strong>🟠 Anomaly:</strong> Increased delivery traffic observed near <em>Extreme Pizza</em> around 5 PM.</p>
+      <small>Submitted: 30/08/2025</small>
+    </div>
+  </aside>
 
-  <form 
-    action="https://formsubmit.co/thepizzaindextracker@gmail.com" 
-    method="POST"
-    onsubmit="alert('Thanks for your report! 🍕');"
-  >
-    <!-- Optional settings -->
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_subject" value="🚨 New Pizza Index Report!">
-    <input type="hidden" name="_next" value="https://thepizzaindex.netlify.app/thanks.html">
+  <!-- Report Form -->
+  <aside id="report-form">
+    <h2>🕵️ Report Suspicious Pizza Activity</h2>
+    <p>Notice anything strange? Suspicious pizza spikes? Black SUVs and cheese trails? Submit it below anonymously.</p>
 
-    <label for="anomaly"><strong>What did you observe?</strong></label><br>
-    <textarea id="anomaly" name="anomaly" rows="5" placeholder="Describe suspicious delivery patterns near the Pentagon..." required></textarea><br><br>
+    <form 
+      action="https://formsubmit.co/thepizzaindextracker@gmail.com" 
+      method="POST"
+      onsubmit="alert('Thanks for your report! 🍕');"
+    >
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_subject" value="🚨 New Pizza Index Report!">
+      <input type="hidden" name="_next" value="https://thepizzaindex.netlify.app/thanks.html">
 
-    <label for="email"><strong>Email (optional)</strong></label><br>
-    <input type="email" id="email" name="email" placeholder="you@example.com"><br><br>
+      <label for="anomaly"><strong>What did you observe?</strong></label><br>
+      <textarea id="anomaly" name="anomaly" rows="5" placeholder="Describe suspicious delivery patterns near the Pentagon..." required></textarea><br><br>
 
-    <button type="submit">Submit Report 🍕</button>
-  </form>
-</aside>
+      <label for="email"><strong>Email (optional)</strong></label><br>
+      <input type="email" id="email" name="email" placeholder="you@example.com"><br><br>
+
+      <button type="submit">Submit Report 🍕</button>
+    </form>
+  </aside>
+
+</main>
 
 <style>
-  #report-form, #user-anomalies {
+  #user-anomalies, #report-form {
     background: #fff;
     border: 2px solid #e74c3c;
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 20px;
-    margin: 20px auto;
-    width: 100%;
-    max-width: 850px; /* cambia questo per adattarlo al tuo layout */
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-  }
-
-  h2 {
-    margin-top: 0;
-    color: #e74c3c;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    flex: 1 1 45%;
+    min-width: 280px;
   }
 
   .anomaly-card {
-    background: #fdfdfd;
-    border-left: 5px solid #e74c3c;
-    padding: 12px 15px;
-    margin-bottom: 12px;
-    border-radius: 6px;
+    background: #fdf2f0;
+    border-left: 4px solid #e74c3c;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
   }
 
-  button {
-    background: #e74c3c;
+  form textarea, form input[type="email"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #e74c3c;
+    border-radius: 4px;
+    font-size: 1rem;
+    margin-top: 5px;
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+
+  form button {
+    background-color: #e74c3c;
     color: white;
-    font-weight: bold;
     border: none;
-    padding: 10px 16px;
-    border-radius: 6px;
+    padding: 0.7rem 1.2rem;
+    font-weight: bold;
     cursor: pointer;
-    transition: background 0.2s ease;
+    border-radius: 6px;
+    transition: background 0.3s;
   }
 
-  button:hover {
-    background: #c0392b;
+  form button:hover {
+    background-color: #c0392b;
+  }
+
+  @media (max-width: 768px) {
+    #user-anomalies, #report-form {
+      flex: 1 1 100%;
+    }
   }
 </style>
 
@@ -499,35 +517,7 @@ setInterval(loadNews, 8 * 60 * 1000);
       </section>
     </div>
 
-    <!-- Sidebar with the report form -->
-    <aside id="report-form">
-      <h2>🕵️ Report Suspicious Pizza Activity</h2>
-      <p>Notice anything strange? Suspicious pizza spikes? Black SUVs and cheese trails? Submit it below anonymously.</p>
 
-      <form 
-        action="https://formsubmit.co/thepizzaindextracker@gmail.com" 
-        method="POST"
-        onsubmit="alert('Thanks for your report! 🍕');"
-      >
-        <!-- Optional settings -->
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_subject" value="🚨 New Pizza Index Report!">
-        <input type="hidden" name="_next" value="https://thepizzaindex.netlify.app/thanks.html">
-
-        <label for="anomaly"><strong>What did you observe?</strong></label><br>
-        <textarea id="anomaly" name="anomaly" rows="5" placeholder="Describe suspicious delivery patterns near the Pentagon..." required></textarea><br><br>
-
-        <label for="email"><strong>Email (optional)</strong></label><br>
-        <input type="email" id="email" name="email" placeholder="you@example.com"><br><br>
-
-        <button type="submit">
-          Submit Report 🍕
-        </button>
-      </form>
-    </aside>
-  </main>
-  </section>
-    </div>
   
 <section id="share-this-slice" style="text-align: center; padding: 2rem 1rem; background: #fff4ee; border-top: 2px dashed #d8411f;">
   <h2 style="color:#d8411f; font-family: 'Amatic SC', cursive; font-size: 2.5rem;">🍕 Share This Slice</h2>
