@@ -405,34 +405,6 @@ setInterval(loadNews, 8 * 60 * 1000);
 
 </section>
 
-<!-- Sidebar with the report form -->
-    <aside id="report-form">
-      <h2>🕵️ Report Suspicious Pizza Activity</h2>
-      <p>Notice anything strange? Suspicious pizza spikes? Black SUVs and cheese trails? Submit it below anonymously.</p>
-
-      <form 
-        action="https://formsubmit.co/thepizzaindextracker@gmail.com" 
-        method="POST"
-        onsubmit="alert('Thanks for your report! 🍕');"
-      >
-        <!-- Optional settings -->
-        <input type="hidden" name="_captcha" value="false">
-        <input type="hidden" name="_subject" value="🚨 New Pizza Index Report!">
-        <input type="hidden" name="_next" value="https://thepizzaindex.netlify.app/thanks.html">
-
-        <label for="anomaly"><strong>What did you observe?</strong></label><br>
-        <textarea id="anomaly" name="anomaly" rows="5" placeholder="Describe suspicious delivery patterns near the Pentagon..." required></textarea><br><br>
-
-        <label for="email"><strong>Email (optional)</strong></label><br>
-        <input type="email" id="email" name="email" placeholder="you@example.com"><br><br>
-
-        <button type="submit">
-          Submit Report 🍕
-        </button>
-      </form>
-    </aside>
-  </main>
-
 <!-- Sidebar with user-reported anomalies -->
 <aside id="user-anomalies">
   <h2>📡 Reported Anomalies</h2>
@@ -466,6 +438,36 @@ setInterval(loadNews, 8 * 60 * 1000);
     border-radius: 4px;
   }
 </style>
+
+<!-- Sidebar with the report form -->
+    <aside id="report-form">
+      <h2>🕵️ Report Suspicious Pizza Activity</h2>
+      <p>Notice anything strange? Suspicious pizza spikes? Black SUVs and cheese trails? Submit it below anonymously.</p>
+
+      <form 
+        action="https://formsubmit.co/thepizzaindextracker@gmail.com" 
+        method="POST"
+        onsubmit="alert('Thanks for your report! 🍕');"
+      >
+        <!-- Optional settings -->
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_subject" value="🚨 New Pizza Index Report!">
+        <input type="hidden" name="_next" value="https://thepizzaindex.netlify.app/thanks.html">
+
+        <label for="anomaly"><strong>What did you observe?</strong></label><br>
+        <textarea id="anomaly" name="anomaly" rows="5" placeholder="Describe suspicious delivery patterns near the Pentagon..." required></textarea><br><br>
+
+        <label for="email"><strong>Email (optional)</strong></label><br>
+        <input type="email" id="email" name="email" placeholder="you@example.com"><br><br>
+
+        <button type="submit">
+          Submit Report 🍕
+        </button>
+      </form>
+    </aside>
+  </main>
+
+
 
       <!-- 🍕 Section 5: Global Pizza Index Chart -->
       <section>
@@ -509,6 +511,8 @@ setInterval(loadNews, 8 * 60 * 1000);
       </form>
     </aside>
   </main>
+  </section>
+    </div>
   
 <section id="share-this-slice" style="text-align: center; padding: 2rem 1rem; background: #fff4ee; border-top: 2px dashed #d8411f;">
   <h2 style="color:#d8411f; font-family: 'Amatic SC', cursive; font-size: 2.5rem;">🍕 Share This Slice</h2>
