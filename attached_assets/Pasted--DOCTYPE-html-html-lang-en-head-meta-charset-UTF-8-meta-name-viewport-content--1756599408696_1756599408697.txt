@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pizza Index Tracker – Live Pentagon Pizza Activity</title>
+  <meta name="description" content="Follow live Pentagon pizza orders with the Pizza Index Tracker. Real-time OSINT data and suspicious delivery spikes." />
+  <meta name="google-site-verification" content="UGYZ7IQOeo1HPOEsYdf4gJbW9D-NpOL2fvuzO7pj13c" />
+  
+<!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="The Pizza Index – Live Pentagon Pizza Tracker" />
+  <meta property="og:description" content="Follow real-time pizza activity near the Pentagon. Updated live." />
+  <meta property="og:image" content="https://thepizzaindex.netlify.app/assets/pizza-social-preview.png" />
+  <meta property="og:url" content="https://thepizzaindex.netlify.app/" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pizza Index Tracker – Live Pentagon Pizza Activity</title>
+<meta name="description" content="Follow live Pentagon pizza orders with the Pizza Index Tracker. Real-time OSINT data and suspicious delivery spikes.">
+  <meta name="google-site-verification" content="UGYZ7IQOeo1HPOEsYdf4gJbW9D-NpOL2fvuzO7pj13c" />
+  
+  <!-- Social Preview Metadata -->
+  <meta property="og:title" content="The Pizza Index – Pentagon Activity Tracker" />
+  <meta property="og:description" content="🍕 OSINT project tracking Pentagon pizza spikes linked to geopolitical events. Slices tell the story." />
+  <meta property="og:image" content="https://thepizzaindex.netlify.app/assets/Pizza_Index.png" />
+  <meta property="og:url" content="https://thepizzaindex.netlify.app/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  
+  <!-- Google Site Verification (facoltativo se non usi Search Console) -->
+  <meta name="google-site-verification" content="UGYZ7IQOeo1HPOEsYdf4gJbW9D-NpOL2fvuzO7pj13c" />
+  <!-- 🔍 SEO Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "The Pizza Index",
+    "url": "https://thepizzaindex.netlify.app",
+    "description": "An OSINT project monitoring pizza delivery spikes near the Pentagon and linking them to geopolitical events.",
+    "inLanguage": "en",
+    "creator": {
+      "@type": "Organization",
+      "name": "Classified Pizza Initiative"
+    }
+  }
+  </script>
+
+
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-35M1TNJ0Y4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-35M1TNJ0Y4');
+  </script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet Map CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+      background-color: #fff9f0;
+      color: #333;
+      border-left: 15px solid #d8411f;
+      border-right: 15px solid #d8411f;
+    }
+
+    header {
+      background: #d8411f;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    header h1 {
+      font-family: 'Amatic SC', cursive;
+      font-size: 3rem;
+      letter-spacing: 1px;
+    }
+
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 1rem;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    /* Content area */
+    #content {
+      flex: 1 1 600px;
+      min-width: 300px;
+    }
+
+    /* Sidebar form */
+    #report-form {
+      flex: 0 0 320px;
+      background: #fff1e0;
+      border: 2px solid #d8411f;
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 2px 2px 8px rgba(216, 65, 31, 0.2);
+      font-size: 0.9rem;
+    }
+
+    h2 {
+      font-family: 'Amatic SC', cursive;
+      font-size: 2rem;
+      margin-top: 0;
+      color: #d8411f;
+    }
+
+    section {
+      margin-bottom: 2rem;
+    }
+
+    .alert-box {
+      background: #ffe0cc;
+      padding: 1rem;
+      border-left: 6px solid #d8411f;
+      font-weight: bold;
+      margin: 1rem 0;
+    }
+
+    #map {
+      height: 400px;
+      width: 100%;
+      border-radius: 8px;
+      border: 2px dashed #d8411f;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 12px;
+      padding: 1.5rem;
+      color: #777;
+    }
+
+    a {
+      color: #d8411f;
+      text-decoration: none;
+    }
+
+    /* Form inputs */
+    form label {
+      font-weight: bold;
+    }
+    form input[type="email"],
+    form textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.5rem;
+      border: 1px solid #d8411f;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 1rem;
+      margin-top: 0.25rem;
+    }
+    form textarea {
+      resize: vertical;
+    }
+
+    form button {
+      background-color: #d8411f;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+    form button:hover {
+      background-color: #b53318;
+    }
+
+    /* Responsive for mobile: stack vertically */
+    @media (max-width: 768px) {
+  body {
+    border-left: none;
+    border-right: none;
+    padding: 0 0.5rem;
+  }
+
+  header h1 {
+    font-size: 2.2rem;
+  }
+
+  main {
+    flex-direction: column;
+    padding: 0.5rem;
+  }
+
+  #content {
+    width: 100%;
+  }
+
+  #report-form {
+    width: 100%;
+    flex: none;
+    margin-top: 2rem;
+    padding: 1rem;
+  }
+
+  #map {
+    height: 350px;
+    border: none;
+    border-radius: 0;
+    width: 100vw;
+    margin-left: -0.5rem;
+  }
+
+  .alert-box {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  #news-cards div {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+  }
+
+  .leaflet-popup-content {
+    font-size: 0.9rem;
+  }
+
+  canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  footer {
+    font-size: 10px;
+    padding: 1rem;
+  }
+}
+  </style>
+</head>
+<script>
+  function copyLink() {
+    navigator.clipboard.writeText("https://thepizzaindex.netlify.app").then(function() {
+      document.getElementById("copy-confirmation").style.display = "block";
+      setTimeout(() => {
+        document.getElementById("copy-confirmation").style.display = "none";
+      }, 2000);
+    });
+  }
+</script>
+  <!-- Floating Share Button -->
+<a href="https://api.whatsapp.com/send?text=Check%20out%20The%20Pizza%20Index!%20🍕%20https%3A%2F%2Fthepizzaindex.netlify.app" target="_blank" id="floating-share">
+  🍕 Share
+</a>
+
+<style>
+  #floating-share {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #d8411f;
+    color: white;
+    padding: 0.7rem 1rem;
+    border-radius: 50px;
+    font-weight: bold;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+    z-index: 1000;
+    transition: background 0.3s;
+  }
+  #floating-share:hover {
+    background: #b53318;
+  }
+</style>
+<body>
+  <header>
+    <h1>Pizza Index</h1>
+    <p>Tracking Pentagon Activity One Slice at a Time 🍕🔍</p>
+  </header>
+
+  <main>
+    <div id="content">
+      <!-- 🍕 Section 1: Historical Correlations -->
+      <section>
+        <h2>🧠 Historical Correlations</h2>
+        <p>We log and analyze pizza activity spikes that correlate with major military events near the Pentagon.</p>
+        <ul>
+          <li><strong>June 12, 2025:</strong> Escalation involving Israel/Iran mirrored by a +42% spike in pizza volume.</li>
+          <li><strong>June 21–22, 2025:</strong> Just before U.S. airstrikes on Iranian nuclear facilities, area-wide pizza demand rose significantly (+65%).</li>
+        </ul>
+      </section>
+
+      <!-- 🍕 Section 2: Interactive Map -->
+      <section>
+        <h2>📍 Pizza Surveillance Map</h2>
+        <p>Click on any outlet to see delivery spikes, historical data, and proximity to the Pentagon.</p>
+        <div id="map"></div>
+      </section>
+
+      <!-- 🍕 Section 3: Pizza Watch -->
+<section>
+  <h2>🚨 Pizza Watch</h2>
+  <div class="alert-box">
+    🍕 <strong>July 15, 2025 – Peak Hours</strong> – Real-time Google Maps data:
+    <ul>
+      <li><strong>Extreme Pizza – 1419 S Fern St</strong>: a bit busier than usual at 4:00 PM</li>
+      <li><strong>We, The Pizza – 2100 Crystal Dr</strong>: less busy than usual at 4:00 PM</li>
+      <li><strong>District Pizza Palace – 2325 S Eads St</strong>: less busy than usual at 4:00 PM</li>
+      <li><strong>California Pizza Kitchen at Pentagon – 1201 S Hayes St</strong>: not busy at 4:00 PM</li>
+      <li><strong>Domino's Pizza – 3535 S Ball St</strong>: less busy than usual at 4:00 PM</li>
+      <li><strong>Domino's Pizza – 2029 K St NW</strong>: less busy than usual at 1:00 PM (July 14)</li>
+    </ul>
+  </div>
+  <p>Source: Google Maps “Popular Times”</p>
+</section>
+
+<section id="geo-news">
+  <h2>📰 Live Geo Events</h2>
+  <div id="news-cards">Loading latest real-world events...</div>
+</section>
+
+<script>
+const FEEDS = [
+  { url: 'https://api.rss2json.com/v1/api.json?rss_url=https://feeds.reuters.com/Reuters/worldNews', source: 'Reuters' },
+  { url: 'https://api.rss2json.com/v1/api.json?rss_url=https://rss.nytimes.com/services/xml/rss/nyt/World.xml', source: 'NY Times' },
+  { url: 'https://api.rss2json.com/v1/api.json?rss_url=http://feeds.bbci.co.uk/news/world/rss.xml', source: 'BBC' }
+];
+
+const neutralReasons = [
+  "This event is significant for global geopolitical stability and may influence regional policies.",
+  "Key developments here could affect international relations and military strategies.",
+  "Important news that might have repercussions on diplomatic efforts and security measures.",
+  "This situation deserves attention due to its potential impact on global peace and conflict dynamics.",
+  "Ongoing events like this can reshape alliances and affect strategic decisions worldwide."
+];
+
+async function loadNews() {
+  const container = document.getElementById('news-cards');
+  container.innerHTML = '';
+
+  for (const feed of FEEDS) {
+    try {
+      const res = await fetch(feed.url);
+      const data = await res.json();
+
+      data.items.slice(0, 2).forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.style.border = '2px dashed #d8411f';
+        card.style.borderRadius = '8px';
+        card.style.padding = '1rem';
+        card.style.marginBottom = '1.5rem';
+        card.style.background = '#fff4ee';
+
+        const title = item.title.length > 80
+          ? item.title.slice(0, 77) + '…'
+          : item.title;
+
+        // Cicla tra le frasi neutre per variare
+        const whyItMatters = neutralReasons[idx % neutralReasons.length];
+
+        card.innerHTML = `
+          <h3 style="margin-top:0;">${feed.source}: ${title}</h3>
+          <p><em>${new Date(item.pubDate).toLocaleDateString()}</em></p>
+          <p><strong>Why it matters:</strong> ${whyItMatters}</p>
+          <a href="${item.link}" target="_blank" style="color:#d8411f;">Read more</a>
+        `;
+
+        container.appendChild(card);
+      });
+    } catch (e) {
+      console.error('Error loading', feed.source, e);
+    }
+  }
+}
+
+loadNews();
+setInterval(loadNews, 8 * 60 * 1000);
+</script>
+
+</section>
+
+<main style="max-width: 1000px; margin: auto; padding: 1rem; display: flex; flex-wrap: wrap; gap: 2rem;">
+
+  <!-- Reported Anomalies -->
+  <aside id="user-anomalies">
+    <h2>📡 Reported Anomalies</h2>
+    <p>Here’s what fellow pizza watchers have spotted:</p>
+
+    <div class="anomaly-card">
+      <p><strong>🟠 Anomaly:</strong> Folks on Bluesky are claiming that there’s been a dramatic surge in orders at <em>Pizzato’s Pizza</em>.</p>
+      <small>Submitted: 30/08/2025</small>
+    </div>
+    <div class="anomaly-card">
+      <p><strong>🟠 Anomaly:</strong> Increased delivery traffic observed near <em>Extreme Pizza</em> around 5 PM.</p>
+      <small>Submitted: 30/08/2025</small>
+    </div>
+  </aside>
+
+  <!-- Report Form -->
+  <aside id="report-form">
+    <h2>🕵️ Report Suspicious Pizza Activity</h2>
+    <p>Notice anything strange? Suspicious pizza spikes? Black SUVs and cheese trails? Submit it below anonymously.</p>
+
+    <form 
+      action="https://formsubmit.co/thepizzaindextracker@gmail.com" 
+      method="POST"
+      onsubmit="alert('Thanks for your report! 🍕');"
+    >
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_subject" value="🚨 New Pizza Index Report!">
+      <input type="hidden" name="_next" value="https://thepizzaindex.netlify.app/thanks.html">
+
+      <label for="anomaly"><strong>What did you observe?</strong></label><br>
+      <textarea id="anomaly" name="anomaly" rows="5" placeholder="Describe suspicious delivery patterns near the Pentagon..." required></textarea><br><br>
+
+      <label for="email"><strong>Email (optional)</strong></label><br>
+      <input type="email" id="email" name="email" placeholder="you@example.com"><br><br>
+
+      <button type="submit">Submit Report 🍕</button>
+    </form>
+  </aside>
+
+</main>
+
+<style>
+  #user-anomalies, #report-form {
+    background: #fff;
+    border: 2px solid #e74c3c;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+    flex: 1 1 45%;
+    min-width: 280px;
+  }
+
+  .anomaly-card {
+    background: #fdf2f0;
+    border-left: 4px solid #e74c3c;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+  }
+
+  form textarea, form input[type="email"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #e74c3c;
+    border-radius: 4px;
+    font-size: 1rem;
+    margin-top: 5px;
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+
+  form button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.3s;
+  }
+
+  form button:hover {
+    background-color: #c0392b;
+  }
+
+  @media (max-width: 768px) {
+    #user-anomalies, #report-form {
+      flex: 1 1 100%;
+    }
+  }
+</style>
+
+
+
+      <!-- 🍕 Section 5: Global Pizza Index Chart -->
+      <section>
+        <h2>📈 Global Pizza Index</h2>
+        <canvas id="pizzaChart" width="400" height="200"></canvas>
+      </section>
+
+      <!-- 🍕 Section 6: About & Disclaimer -->
+      <section>
+        <h2>👤 About This Project</h2>
+        <p><strong>What is the Pizza Index?</strong><br>
+        An independent OSINT initiative tracking behavioral patterns via food delivery data. All sources are public. No personal data collected — only pizza slices.</p>
+        <p><em>“Correlation isn’t causation — but correlation with mozzarella deserves a second glance.”</em></p>
+      </section>
+    </div>
+
+
+  
+<section id="share-this-slice" style="text-align: center; padding: 2rem 1rem; background: #fff4ee; border-top: 2px dashed #d8411f;">
+  <h2 style="color:#d8411f; font-family: 'Amatic SC', cursive; font-size: 2.5rem; margin-bottom: 0.5rem;">🍕 Share This Slice</h2>
+  <p style="max-width: 600px; margin: 0.5rem auto 1.5rem; font-size: 1rem;">
+    If you found this tasty, share it. One slice could expose a thousand secrets.
+  </p>
+
+  <div class="share-buttons" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem;">
+    <button onclick="copyLink()" class="share-btn copy-btn">📎 Copy Link</button>
+    <a href="https://twitter.com/intent/tweet?text=Pizza%20spikes%20near%20the%20Pentagon%3F%20You%20need%20to%20see%20this.%20🍕%20https%3A%2F%2Fthepizzaindex.netlify.app" target="_blank" class="share-btn twitter-btn">🐦 Tweet</a>
+    <a href="https://t.me/share/url?url=https://thepizzaindex.netlify.app&text=This%20OSINT%20pizza%20site%20is%20wild%20🍕" target="_blank" class="share-btn telegram-btn">✈️ Telegram</a>
+    <a href="mailto:?subject=Check%20this%20out!&body=Pentagon%20pizza%20spikes%20explained%20🍕%20https://thepizzaindex.netlify.app" class="share-btn email-btn">✉️ Email</a>
+    <a href="https://www.reddit.com/submit?url=https://thepizzaindex.netlify.app&title=Pentagon%20Pizza%20Spikes%20are%20Real.%20OSINT%20says%20so.%20🍕" target="_blank" class="share-btn reddit-btn">👽 Reddit</a>
+  </div>
+
+  <p id="copy-confirmation" style="color: green; display: none; margin-top: 1rem;">✅ Link copied!</p>
+</section>
+
+<footer style="text-align: center; font-size: 12px; padding: 1.5rem; color: #777; background: #fff9f0; border-top: 2px dashed #d8411f;">
+  &copy; 2025 Classified Pizza Initiative. <br>
+  No anchovies were harmed during the making of this platform.
+</footer>
+
+<style>
+  .share-btn {
+    display: inline-block;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    min-width: 100px;
+    text-align: center;
+  }
+
+  .copy-btn {
+    background-color: #d8411f;
+    color: #fff;
+    border: none;
+  }
+  .copy-btn:hover {
+    background-color: #b53318;
+  }
+
+  .twitter-btn {
+    background-color: #1DA1F2;
+    color: #fff;
+  }
+  .twitter-btn:hover { background-color: #0d8ddb; }
+
+  .telegram-btn {
+    background-color: #0088cc;
+    color: #fff;
+  }
+  .telegram-btn:hover { background-color: #006699; }
+
+  .email-btn {
+    background-color: #d8411f;
+    color: #fff;
+  }
+  .email-btn:hover { background-color: #b53318; }
+
+  .reddit-btn {
+    background-color: #ff4500;
+    color: #fff;
+  }
+  .reddit-btn:hover { background-color: #e03d00; }
+
+  @media (max-width: 480px) {
+    .share-buttons {
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .share-btn { min-width: auto; width: 80%; }
+  }
+</style>
+
+  <!-- 🗺️ Map Script -->
+  <script>
+  const map = L.map('map').setView([38.8719, -77.0563], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  const pizzerias = [
+    {
+      coords: [38.853801, -77.071426],
+      name: "Extreme Pizza",
+      address: "1419 S Fern St, Arlington, VA 22202, USA",
+      datetime: "July 20, 2025, 5:40 PM",
+      status: "Busier than usual"
+    },
+    {
+      coords: [38.857728, -77.055621],
+      name: "We, The Pizza",
+      address: "2100 Crystal Dr, Arlington, VA 22202, USA",
+      datetime: "July 20, 2025, 5:40 PM",
+      status: "Less busier than usual"
+    },
+    {
+      coords: [38.8472, -77.0535],
+      name: "District Pizza Palace",
+      address: "2325 S Eads St, Arlington, VA 22202, USA",
+      datetime: "July 20, 2025, 5:40 PM",
+      status: "Much busy than usual"
+    },
+    {
+      coords: [38.8663, -77.0750],
+      name: "California Pizza Kitchen at Pentagon",
+      address: "1201 S Hayes St, Arlington, VA 22202, USA",
+      datetime: "July 20, 2025, 5:40 PM",
+      status: "Less busier than usual"
+    },
+    {
+      coords: [38.9015, -77.0383],
+      name: "Domino's Pizza",
+      address: "2029 K St NW, Washington, DC 20006, USA",
+      datetime: "July 14, 2025, 1:00 PM",
+      status: "Less busy than usual"
+    },
+    {
+      coords: [38.8477, -77.0503],
+      name: "Domino's Pizza",
+      address: "3535 S Ball St, Arlington, VA 22202, USA",
+      datetime: "July 15, 2025, 4:00 PM",
+      status: "Busier than usual"
+    }
+  ];
+
+  pizzerias.forEach(p => {
+    const marker = L.marker(p.coords).addTo(map);
+    const popupContent = `
+      <strong>${p.name}</strong><br>
+      ${p.address}<br>
+      <em>${p.datetime}</em><br>
+      <strong>Status:</strong> ${p.status}
+    `;
+    marker.bindPopup(popupContent);
+  });
+</script>
+
+  <!-- 📈 Chart Script -->
+  <script>
+  const statusValues = {
+    "Normal": 100,
+    "Less busier than usual": 80,
+    "Busier than usual": 150,
+    "A bit busier than usual": 120,
+    "Not busy": 50
+  };
+
+  const pizzaDataByDate = {
+    "July 14": [
+      { name: "Extreme Pizza", status: "Less busier than usual" },
+      { name: "We, The Pizza", status: "Normal" },
+      { name: "District Pizza Palace", status: "Busier than usual" },
+      { name: "California Pizza Kitchen at Pentagon", status: "Busier than usual" },
+      { name: "Domino's Pizza (K St NW)", status: "Less busier than usual" },
+      { name: "Domino's Pizza (Ball St)", status: "Busier than usual" }
+    ],
+    "July 15": [
+      { name: "Extreme Pizza", status: "A bit busier than usual" },
+      { name: "We, The Pizza", status: "Less busier than usual" },
+      { name: "District Pizza Palace", status: "Less busier than usual" },
+      { name: "California Pizza Kitchen at Pentagon", status: "Not busy" },
+      { name: "Domino's Pizza (K St NW)", status: "Less busier than usual" },
+      { name: "Domino's Pizza (Ball St)", status: "Busier than usual" }
+    ],
+    "July 20": [
+      { name: "Extreme Pizza", status: "Busier than usual" },
+      { name: "We, The Pizza", status: "Less busier than usual" },
+      { name: "District Pizza Palace", status: "Much busier than usual" },
+      { name: "California Pizza Kitchen at Pentagon", status: "Not busy" },
+  };
+
+  function calculateAvgValue(dayData) {
+    const values = dayData.map(p => statusValues[p.status] || 0);
+    return values.reduce((a, b) => a + b, 0) / values.length;
+  }
+
+  function prepareChartData(dataByDate) {
+    const labels = Object.keys(dataByDate);
+    const dataValues = labels.map(date => calculateAvgValue(dataByDate[date]));
+
+    return {
+      labels: labels,
+      datasets: [{
+        label: 'Pizza Traffic Index',
+        data: dataValues,
+        borderColor: '#d8411f',
+        backgroundColor: 'rgba(216, 65, 31, 0.2)',
+        fill: true,
+        tension: 0.3,
+        pointRadius: 5,
+        pointHoverRadius: 7
+      }]
+    };
+  }
+
+  const ctx = document.getElementById('pizzaChart').getContext('2d');
+  const chartData = prepareChartData(pizzaDataByDate);
+
+  const pizzaChart = new Chart(ctx, {
+    type: 'line',
+    data: chartData,
+    options: {
+      responsive: true,
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: 'Traffic Volume' } },
+        x: { title: { display: true, text: 'Date' } }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>

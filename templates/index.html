@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍕 The Pizza Index - Pentagon Pizza Activity Tracker</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <meta name="description" content="OSINT tracking of pizza delivery patterns near the Pentagon, correlating with geopolitical events">
+    <meta property="og:title" content="🍕 The Pizza Index - Pentagon Activity Tracker">
+    <meta property="og:description" content="Tracking behavioral patterns via food delivery data">
+    <meta property="og:type" content="website">
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Header -->
+        <header class="text-center py-4 mb-4">
+            <h1 class="display-4 text-warning">🍕 The Pizza Index</h1>
+            <p class="lead text-light">Pentagon Pizza Activity Tracker</p>
+            
+            <!-- Share Button -->
+            <div class="share-section mt-3">
+                <a href="https://api.whatsapp.com/send?text=Check%20out%20The%20Pizza%20Index!%20%F0%9F%8D%95%20{{ request.url }}" 
+                   class="btn btn-outline-warning btn-sm" target="_blank">
+                    🍕 Share
+                </a>
+            </div>
+        </header>
+
+        <!-- Historical Correlations Section -->
+        <section class="mb-5">
+            <h2 class="h3 text-warning mb-3"><i class="fas fa-brain"></i> Historical Correlations</h2>
+            <p class="text-light mb-4">We log and analyze pizza activity spikes that correlate with major military events near the Pentagon.</p>
+            
+            <div class="correlation-list">
+                {% if featured_correlations %}
+                    {% for correlation in featured_correlations %}
+                    <div class="correlation-item mb-3">
+                        <strong class="text-warning">{{ correlation.date.strftime('%B %d, %Y') }}:</strong>
+                        <span class="text-light">{{ correlation.description }}</span>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <div class="correlation-item mb-3">
+                    <strong class="text-warning">June 12, 2025:</strong>
+                    <span class="text-light">Escalation involving Israel/Iran mirrored by a +42% spike in pizza volume.</span>
+                </div>
+                <div class="correlation-item mb-3">
+                    <strong class="text-warning">June 21–22, 2025:</strong>
+                    <span class="text-light">Just before U.S. airstrikes on Iranian nuclear facilities, area-wide pizza demand rose significantly (+65%).</span>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- Pizza Surveillance Map -->
+        <section class="mb-5">
+            <h2 class="h3 text-warning mb-3"><i class="fas fa-map-marker-alt"></i> Pizza Surveillance Map</h2>
+            <p class="text-light mb-3">Click on any outlet to see delivery spikes, historical data, and proximity to the Pentagon.</p>
+            
+            <div id="map" style="height: 400px; border: 1px solid #444;"></div>
+        </section>
+
+        <!-- Pizza Watch Section -->
+        <section class="mb-5">
+            <h2 class="h3 text-warning mb-3"><i class="fas fa-exclamation-triangle"></i> Pizza Watch</h2>
+            <p class="text-warning mb-3">🍕 <strong>{{ (recent_activities[0][1].timestamp if recent_activities else datetime.now()).strftime('%B %d, %Y') }} – Peak Hours</strong> – Real-time Google Maps data:</p>
+            
+            <div class="pizza-watch-list">
+                {% if recent_activities %}
+                    {% for activity, outlet in recent_activities %}
+                    <div class="pizza-watch-item mb-2">
+                        <strong class="text-warning">{{ outlet.name }} – {{ outlet.address }}:</strong>
+                        <span class="text-light">{{ activity.busy_level }} at {{ activity.timestamp.strftime('%I:%M %p') }}</span>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <div class="pizza-watch-item mb-2">
+                    <strong class="text-warning">Extreme Pizza – 1419 S Fern St:</strong>
+                    <span class="text-light">a bit busier than usual at 4:00 PM</span>
+                </div>
+                <div class="pizza-watch-item mb-2">
+                    <strong class="text-warning">We, The Pizza – 2100 Crystal Dr:</strong>
+                    <span class="text-light">less busy than usual at 4:00 PM</span>
+                </div>
+                <div class="pizza-watch-item mb-2">
+                    <strong class="text-warning">District Pizza Palace – 2325 S Eads St:</strong>
+                    <span class="text-light">less busy than usual at 4:00 PM</span>
+                </div>
+                <div class="pizza-watch-item mb-2">
+                    <strong class="text-warning">California Pizza Kitchen at Pentagon – 1201 S Hayes St:</strong>
+                    <span class="text-light">not busy at 4:00 PM</span>
+                </div>
+                <div class="pizza-watch-item mb-2">
+                    <strong class="text-warning">Domino's Pizza – 3535 S Ball St:</strong>
+                    <span class="text-light">less busy than usual at 4:00 PM</span>
+                </div>
+                <div class="pizza-watch-item mb-2">
+                    <strong class="text-warning">Domino's Pizza – 2029 K St NW:</strong>
+                    <span class="text-light">less busy than usual at 1:00 PM (July 14)</span>
+                </div>
+                {% endif %}
+            </div>
+            
+            <p class="text-muted mt-3"><small>Source: Google Maps "Popular Times"</small></p>
+        </section>
+
+        <!-- Live Geo Events -->
+        <section class="mb-5">
+            <h2 class="h3 text-warning mb-3"><i class="fas fa-newspaper"></i> Live Geo Events</h2>
+            
+            <div class="news-feed">
+                {% if latest_events %}
+                    {% for event in latest_events %}
+                    <div class="news-item mb-4">
+                        <h4 class="h5 text-warning">{{ event.source }}: {{ event.title }}</h4>
+                        <p class="text-muted"><em>{{ event.published_date.strftime('%m/%d/%Y') if event.published_date else '8/30/2025' }}</em></p>
+                        <p class="text-light"><strong>Why it matters:</strong> {{ event.description }}</p>
+                        <a href="{{ event.url }}" target="_blank" class="text-warning">Read more</a>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <div class="news-item mb-4">
+                    <h4 class="h5 text-warning">NY Times: Russia Distracts Its Citizens From Ukraine War With Nonstop Festivals</h4>
+                    <p class="text-muted"><em>8/30/2025</em></p>
+                    <p class="text-light"><strong>Why it matters:</strong> This event is significant for global geopolitical stability and may influence regional policies.</p>
+                    <a href="https://www.nytimes.com/2025/08/30/world/europe/russia-ukraine-war-summer-in-moscow.html" target="_blank" class="text-warning">Read more</a>
+                </div>
+                
+                <div class="news-item mb-4">
+                    <h4 class="h5 text-warning">NY Times: Over 15 Killed in Gaza City, One Day After Israel Ends Daily Pauses for Aid</h4>
+                    <p class="text-muted"><em>8/30/2025</em></p>
+                    <p class="text-light"><strong>Why it matters:</strong> Key developments here could affect international relations and military strategies.</p>
+                    <a href="https://www.nytimes.com/2025/08/30/world/middleeast/gaza-israel-deadly-strikes.html" target="_blank" class="text-warning">Read more</a>
+                </div>
+                
+                <div class="news-item mb-4">
+                    <h4 class="h5 text-warning">BBC: Houthis confirm their prime minister killed in Israeli strike</h4>
+                    <p class="text-muted"><em>8/30/2025</em></p>
+                    <p class="text-light"><strong>Why it matters:</strong> This event is significant for global geopolitical stability and may influence regional policies.</p>
+                    <a href="https://www.bbc.com/news/articles/c620ykrxedwo?at_medium=RSS&at_campaign=rss" target="_blank" class="text-warning">Read more</a>
+                </div>
+                
+                <div class="news-item mb-4">
+                    <h4 class="h5 text-warning">BBC: Prominent Ukrainian politician Andriy Parubiy shot dead in Lviv</h4>
+                    <p class="text-muted"><em>8/30/2025</em></p>
+                    <p class="text-light"><strong>Why it matters:</strong> Key developments here could affect international relations and military strategies.</p>
+                    <a href="https://www.bbc.com/news/articles/cjw6ep37469o?at_medium=RSS&at_campaign=rss" target="_blank" class="text-warning">Read more</a>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <!-- Global Pizza Index Placeholder -->
+        <section class="mb-5">
+            <h2 class="h3 text-warning mb-3"><i class="fas fa-chart-line"></i> Global Pizza Index</h2>
+            <div class="alert alert-dark">
+                <p class="text-light mb-0">Global correlation analysis coming soon...</p>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="mb-5">
+            <h2 class="h3 text-warning mb-3"><i class="fas fa-user"></i> About This Project</h2>
+            
+            <div class="about-content">
+                <h4 class="h5 text-warning mb-3">What is the Pizza Index?</h4>
+                <p class="text-light mb-4">An independent OSINT initiative tracking behavioral patterns via food delivery data. All sources are public. No personal data collected — only pizza slices.</p>
+                
+                <blockquote class="blockquote text-center">
+                    <p class="text-light fst-italic">"Correlation isn't causation — but correlation with mozzarella deserves a second glance."</p>
+                </blockquote>
+            </div>
+        </section>
+
+        <!-- Share Section -->
+        <section class="mb-5">
+            <h2 class="h3 text-warning mb-3"><i class="fas fa-share-alt"></i> Share This Slice</h2>
+            <p class="text-light mb-4">If you found this tasty, share it. One slice could expose a thousand secrets.</p>
+            
+            <div class="share-buttons">
+                <button id="copyLinkBtn" class="btn btn-outline-warning btn-sm me-2">
+                    <i class="fas fa-link"></i> Copy Link
+                </button>
+                <a href="https://twitter.com/intent/tweet?text=Pizza%20spikes%20near%20the%20Pentagon%3F%20You%20need%20to%20see%20this.%20%F0%9F%8D%95%20{{ request.url }}" 
+                   target="_blank" class="btn btn-outline-warning btn-sm me-2">
+                    <i class="fab fa-twitter"></i> Tweet
+                </a>
+                <a href="https://t.me/share/url?url={{ request.url }}&text=This%20OSINT%20pizza%20site%20is%20wild%20%F0%9F%8D%95" 
+                   target="_blank" class="btn btn-outline-warning btn-sm me-2">
+                    <i class="fab fa-telegram"></i> Telegram
+                </a>
+                <a href="mailto:?subject=Check%20this%20out!&body=Pentagon%20pizza%20spikes%20explained%20%F0%9F%8D%95%20{{ request.url }}" 
+                   class="btn btn-outline-warning btn-sm me-2">
+                    <i class="fas fa-envelope"></i> Email
+                </a>
+                <a href="https://www.reddit.com/submit?url={{ request.url }}&title=Pentagon%20Pizza%20Spikes%20are%20Real.%20OSINT%20says%20so.%20%F0%9F%8D%95" 
+                   target="_blank" class="btn btn-outline-warning btn-sm">
+                    <i class="fab fa-reddit"></i> Reddit
+                </a>
+            </div>
+            
+            <div id="copySuccess" class="alert alert-success mt-3" style="display: none;">
+                <i class="fas fa-check"></i> Link copied!
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 mt-5 border-top border-secondary">
+        <p class="text-muted mb-0">
+            <small>Independent OSINT initiative • All data from public sources • No personal data collected</small>
+        </p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
