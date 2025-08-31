@@ -80,8 +80,8 @@ def fetch_from_news_api():
             for article in data.get('articles', []):
                 if article.get('title') and article.get('url'):
                     articles.append({
-                        'title': article['title'],
-                        'description': article.get('description', ''),
+                        'title': article['title'].encode('utf-8', 'replace').decode('utf-8'),
+                        'description': article.get('description', '').encode('utf-8', 'replace').decode('utf-8') if article.get('description') else '',
                         'source': 'News API',
                         'url': article['url'],
                         'published_date': datetime.fromisoformat(
@@ -116,8 +116,8 @@ def fetch_from_nyt_api():
             for doc in data.get('response', {}).get('docs', []):
                 if doc.get('headline', {}).get('main'):
                     articles.append({
-                        'title': doc['headline']['main'],
-                        'description': doc.get('abstract', ''),
+                        'title': doc['headline']['main'].encode('utf-8', 'replace').decode('utf-8'),
+                        'description': doc.get('abstract', '').encode('utf-8', 'replace').decode('utf-8') if doc.get('abstract') else '',
                         'source': 'NY Times',
                         'url': doc['web_url'],
                         'published_date': datetime.fromisoformat(
