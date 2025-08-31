@@ -18,14 +18,14 @@ def initialize_pizza_outlets():
     if PizzaOutlet.query.count() > 0:
         return
     
-    # Pentagon area pizza outlets based on the actual data from the website
+    # Pentagon area pizza outlets with actual Google Place IDs from the user's original code
     outlets_data = [
         {
             'name': 'Extreme Pizza',
             'address': '1419 S Fern St, Arlington, VA',
             'latitude': 38.8625,
             'longitude': -77.0647,
-            'place_id': 'extreme_pizza_fern',
+            'place_id': 'ChIJcYireCe3t4kR4d9trEbGYjc',
             'rating': 4.2
         },
         {
@@ -33,7 +33,7 @@ def initialize_pizza_outlets():
             'address': '2100 Crystal Dr, Arlington, VA',
             'latitude': 38.8583,
             'longitude': -77.0492,
-            'place_id': 'we_the_pizza_crystal',
+            'place_id': 'ChIJ42QeLXu3t4kRnArvcaz2o3A',
             'rating': 4.5
         },
         {
@@ -41,7 +41,7 @@ def initialize_pizza_outlets():
             'address': '2325 S Eads St, Arlington, VA',
             'latitude': 38.8542,
             'longitude': -77.0575,
-            'place_id': 'district_pizza_eads',
+            'place_id': 'ChIJ42QeLXu3t4kRnArvcaz2o3A',
             'rating': 4.0
         },
         {
@@ -49,7 +49,7 @@ def initialize_pizza_outlets():
             'address': '1201 S Hayes St, Arlington, VA',
             'latitude': 38.8653,
             'longitude': -77.0603,
-            'place_id': 'cpk_pentagon',
+            'place_id': 'ChIJ7y7tKd-2t4kRVQLgS4v63A4',
             'rating': 3.8
         },
         {
@@ -57,7 +57,7 @@ def initialize_pizza_outlets():
             'address': '3535 S Ball St, Arlington, VA',
             'latitude': 38.8456,
             'longitude': -77.0789,
-            'place_id': 'dominos_ball_st',
+            'place_id': 'ChIJiRsMcTKxt4kRb9rj3ZyTt-M',
             'rating': 3.5
         },
         {
@@ -65,7 +65,7 @@ def initialize_pizza_outlets():
             'address': '2029 K St NW, Washington, DC',
             'latitude': 38.9026,
             'longitude': -77.0459,
-            'place_id': 'dominos_k_st',
+            'place_id': 'ChIJlWlFSLe3t4kRz6T5efpRbus',
             'rating': 3.3
         }
     ]
